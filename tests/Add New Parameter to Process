@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://155.98.92.137/dsp/design_your_process/admin/" />
+<title>Add New Parameter to Process</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Add New Parameter to Process</td></tr>
+</thead><tbody>
+<tr>
+        <td>open</td>
+        <td>/dsp/design_your_process/admin/edit_process.php</td>
+        <td></td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=category</td>
+        <td>label=Cleaning</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=process</td>
+        <td>label=Solvent</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=tool</td>
+        <td>label=Solvent Hood</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=material</td>
+        <td>label=IPA</td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>id=saveForm</td>
+        <td></td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>link=Add new parameter</td>
+        <td></td>
+</tr>
+<tr>
+        <td>type</td>
+        <td>id=element_1</td>
+        <td>TestForSolventHood</td>
+</tr>
+<tr>
+        <td>type</td>
+        <td>id=element_2</td>
+        <td>aUnit</td>
+</tr>
+<tr>
+        <td>type</td>
+        <td>id=element_3</td>
+        <td>10</td>
+</tr>
+<tr>
+        <td>click</td>
+        <td>id=element_4_1</td>
+        <td></td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>link=Edit Process</td>
+        <td></td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=category</td>
+        <td>label=Cleaning</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=process</td>
+        <td>label=Solvent</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=tool</td>
+        <td>label=Solvent Hood</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=material</td>
+        <td>label=IPA</td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>id=saveForm</td>
+        <td></td>
+</tr>
+<tr>
+        <td>verifyTextPresent</td>
+        <td>TestForSolventHood</td>
+        <td></td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>id=saveForm</td>
+        <td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

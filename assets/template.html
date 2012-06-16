@@ -1,0 +1,57 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>@@TITLE@@</title>
+<link rel="stylesheet" type="text/css" href="@@DSPWEBROOT@@/assets/view.css" media="all"/>
+<script type="text/javascript" src="@@DSPWEBROOT@@/assets/view.js"></script>
+<script src="@@DSPWEBROOT@@/assets/process_structure.js" language="javascript"></script>
+<script src="@@DSPWEBROOT@@/assets/process_definitions.js.php" language="javascript"></script>
+<script src="@@DSPWEBROOT@@/assets/jquery-ui/js/jquery-1.7.2.min.js" language="javascript"></script>
+<script src="@@DSPWEBROOT@@/assets/jquery-ui/js/jquery-ui-1.8.21.custom.min.js" language="javascript"></script>
+<script src="@@DSPWEBROOT@@/assets/calculator.js" language="javascript"></script>
+<link rel="stylesheet" type="text/css" href="@@DSPWEBROOT@@/assets/calculator.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="@@DSPWEBROOT@@/assets/jquery-ui/css/ui-lightness/jquery-ui-1.8.21.custom.css" media="all"/>
+
+</head>
+    
+<body id="main_body" >
+    <div id="dashboard">
+        <a id="home_button" class="button" href="@@DSPWEBROOT@@">
+            <span class="ui-icon ui-icon-home ui-icon-shadow">&nbsp;</span>
+            <span class="button_description">Home</span>
+        </a>
+        @@DASHBOARD@@
+    </div>
+    <a href="http://www.nanofab.utah.edu"><img src="@@DSPWEBROOT@@/assets/images/logo_2_scaled_down.png" alt="Brought to you by the Utah Nanofab"></img></a>
+	<nav id="main_navigation">
+            <!--
+		<a href="edit_process.php">Edit</a>
+		<a href="new_process.php">New</a>
+		<a href="form.php">Design Your Process</a>
+                @@LOGIN@@
+            -->
+	</nav>
+            
+	<div id="form_container">
+	
+		<div class="form_description">
+			<h2>@@TITLE@@</h2>
+                        <div id="messages">@@MESSAGES@@</div>
+                        <div id="errors">@@ERRORS@@</div>
+			<p>@@INSTRUCTIONS@@</p>
+		</div>	
+                <div id="error_display">
+                </div>
+                <div id="message_display">
+                </div>
+		@@CONTENT@@
+                <div id="input"></div>
+	</div>
+        <!--<img id="bottom" src="../assets/bottom.png" alt="">-->
+        <div id="bottom_shadow">&nbsp;</div>
+    
+
+	</body>
+</html>

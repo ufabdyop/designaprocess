@@ -1,0 +1,263 @@
+#wrapper {
+	width: 375px;
+	margin: 0 auto;
+	text-align: center;
+}
+#calculator {
+	width: 100%;
+	height: 300px;
+	font-size: 24px;
+}
+#calculatorResult {
+	font-size: 34px;
+	width: 285px;
+	padding: 5px;
+	border: solid 1px #111;
+	background: #333;
+	color:#fff;
+	margin-bottom: 10px;	
+	float: left;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+#calculatorKeyboard {
+	width: 100%;
+	float: left;
+	list-style: none;
+        padding-left: 2px;
+}
+#calculatorKeyboard li {
+	display: block;
+	color: #fff;
+	float: left;
+	padding: 13px 0 0 0;
+	width: 70px;
+	height: 37px;
+	border: solid 1px #111;
+	cursor: pointer;
+	margin: 0 3px 3px 0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: url('calculator_button.png') repeat-x 0 0 #0c7dab;
+}
+#calculatorKeyboard li.double {
+	width: 145px;
+}
+#calculatorKeyboard li.operator {
+	background: url('calculator_button.png') repeat-x 0 -50px #084f6c;
+}
+#calculatorKeyboard li.summary {
+	background: url('calculator_button.png') repeat-x 0 -100px #083b50;
+}
+#calculatorKeyboard li:hover {
+	background-image: none;
+}
+#calculatorKeyboard li.active {
+	background: url('calculator_button.png') repeat-x 0 -150px #693d08;
+}
+.noHighlight {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+        font-size: 18px;
+}
+
+div#logSpacer {
+	margin: 0;
+	padding: 0;
+	min-width: 750px;
+	display: block;
+}
+
+div#logWrap {
+	display: none;
+	position: absolute;
+	top: 5px;
+	right: 0;
+	overflow-x: hidden;
+	color: white; 
+	width: 350px; 
+	padding-top: 15px;
+}
+
+div#logger {
+	margin: 0;
+	padding: 0;
+	height: 350px; 
+	overflow-y: scroll; 
+}
+
+div#hoverLogReset {
+	position: absolute;
+	top: 140px;
+	right: -71px;
+	padding: 0;
+	color: #000;
+	font-size: larger;
+	opacity: 0.3;
+	cursor: pointer;
+}
+
+div#hoverLogReset span {
+	background: white;
+	padding: 6px 10px 6px 10px;
+	position: relative;
+	top: -18px;
+	left: -6px;
+	visibility: hidden;
+}
+
+img#closeLogger{
+	position: absolute;
+	top: 15px;
+	right: 18px;
+	opacity: 0.3;
+	cursor: pointer;
+}
+
+div#openLogger {
+	position: absolute;
+	bottom: -5px;
+	right: 10px;
+	background: #efefef;
+	border-radius: 5px 5px 0 0;
+	opacity: 0.3;
+	cursor: pointer;
+	display: none;
+}
+
+div#openLogger img { 
+	margin: 5px;
+}
+
+div#links {
+	position: absolute;
+	left: 10px;
+	bottom: -5px;
+	margin: 0;
+	padding: 0;
+	background: #efefef;
+	border-radius: 5px 5px 0 0;
+	opacity: 0.3;
+}
+
+div#links div {
+	display: inline;
+	position: relative;
+}
+
+div#links img {
+	width: 32px;
+	height: 32px;
+	padding: 5px 10px;
+	background: #efefef;
+	border-radius: 5px;
+	position: relative;
+}
+
+div#links a {
+	text-decoration: none;
+}
+
+div#links span {
+	position: absolute;
+	top: -60px;
+	padding: 5px;
+	background: #efefef;
+	border-radius: 5px;
+	display: none;
+}
+#calculatorKeyboard li.triple {
+	width: 220px;
+}
+#calculator_output {
+    width: 98%;
+    height: 45px;
+    border: 2px solid black;
+    margin: 0 3px 3px 0;
+}
+#equation_submit {
+    display: block;
+    float: left;
+    padding: 13px 0 15 0;
+    width: 100%;
+    height: 56px;
+    border: solid 1px #111;
+    margin: 0 3px 3px 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: red;
+    font-size: 25px;
+    margin: 0 3px 3px 0;
+    background: url('calculator_button.png') repeat-x 0 -50px #084f6c;
+    font-size: 25px;
+    border: solid 1px #111;
+    color: #fff;
+}
+
+#equation_submit:hover {
+    background-image: none;
+    background: #333;
+}
+#equation_name {
+    width: 92%;
+    height: 45px;
+    border: 2px solid black;
+    margin: 0 3px 3px 0;
+}
+#eqName{
+    float: left;
+    text-align: left;
+    width: 75%;
+}
+#eqUnit{
+    text-align: left;
+}
+#eqLabel{
+    clear: both;
+    float: left;
+}
+#output_unit {
+    float: right;
+    width: 21%;
+    height: 45px;
+    border: 2px solid black;
+    margin: 0 3px 3px 0;
+}
+#invalid{
+    display: block;
+    float: left;
+    padding: 13px 0 0 0;
+    width: 100%;
+    height: 37px;
+    border: solid 1px #111;
+    margin: 0 3px 3px 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: red;
+    font-size: 25px;
+   
+}
+#valid{
+    display: block;
+    float: left;
+    padding: 13px 0 0 0;
+    width: 100%;
+    height: 37px;
+    border: solid 1px #111;
+    margin: 0 3px 3px 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: green;
+    font-size: 25px;
+   
+}

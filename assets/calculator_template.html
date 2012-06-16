@@ -1,0 +1,173 @@
+
+<script language="javascript">
+String.prototype.splice = function( idx, rem, s ) {
+    return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
+};
+
+	var original_submit_css_background     ;
+    function backspace(){
+        var value = $('#calculator_output').val();
+        //value.length;
+        var newvalue = value.substring(0, value.length - 1);
+        $('#calculator_output').val(newvalue);
+    }
+    
+    function clear(){
+        $('#calculator_output').val(''); 
+    }
+    
+    function button_click(event) {
+        var button = $(event.target).attr('data-value');
+	var cursor = $('#calculator_output')[0].selectionStart;
+        switch (button){
+            case 'c':
+                clear();
+                break;
+            case 'bks':
+                backspace();
+                break;
+            case 'var':
+                add_variable();
+                break;
+            default:
+                var value = $('#calculator_output').val();
+		value = value.splice(cursor, 0, button);
+                $('#calculator_output').val(value);
+		$('#calculator_output')[0].selectionStart = cursor + button.length;
+		$('#calculator_output')[0].selectionEnd = cursor + button.length;
+                break;    
+        }
+        validate();
+    }
+    
+    function select_variable() {
+        $('#variable_form').dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Add Variable": function () {
+                    var expression = $('#calculator_output').val();
+                    var choice = $('#variable_select').val();
+                    $('#calculator_output').val(expression + ' ' + choice);
+                    validate();
+                    $(this).dialog('close');
+                },
+                "Cancel": function() {
+                    $(this).dialog('close');
+                }
+            },
+            close: function() {
+                
+            }
+        });
+        $('#variable_form').dialog('open');
+    }
+    
+    function add_variable() {
+        var html = '';
+        for(var variable in available_variables) {
+            html += '<option value="var_' + available_variables[variable] + '">' +
+                    available_variables[variable] + '</option>' + "\n";
+        }
+        $('#variable_select').html(html);
+        select_variable();
+    }
+    
+    function validate() {
+        expression = $('#calculator_output').val();
+        var result ;
+        try {
+            calculator.parse(expression);
+            result = '<p id="valid" style="color: white">Properly Formatted Equation</p>';
+            enable_submit();
+        } catch( e) {
+            result = '<p id="invalid" style="color: white">Equation Format Error!</p>';
+            disable_submit();
+        }
+        $('#validation_results').html(result);
+    }
+    
+    function disable_submit() {
+            $('#equation_submit').attr('disabled', true);
+            $('#equation_submit').css('background-color', 'grey');
+            $('#equation_submit').css('background-image', 'none');
+    }
+    
+    function enable_submit() {
+
+            $('#equation_submit').attr('disabled', false);
+            $('#equation_submit').css('background', original_submit_css_background);
+    }
+    
+    jQuery(document).ready(
+        function() {
+            $('#calculatorKeyboard li').click(button_click);
+            $('#calculator_output').change(validate);
+            $('#calculator_output').bind('keydown', validate);
+            $('#calculator_output').bind('paste', validate);
+            $('#calculator_output').bind('input', validate);
+            original_submit_css_background = $('#equation_submit').css('background') ;
+	    //disable_submit();
+        });
+        
+</script>
+<form action="@@POST_TO@@" method="post">
+<div id="wrapper">
+	<div id="calculator" class="noHighlight">
+            <div id="eqName">
+                <label class="noHighlight" for="eqName"> Equation Name: </label>
+                <input name="equation_name" type="text" id="equation_name" value="@@NAME@@"/>
+            </div>
+            <div id="eqUnit">
+                <label class="noHighlight" for="eqUnit"> Unit: </label>
+                <input name="output_unit" type="text" id="output_unit" value="@@UNIT@@"/>
+            </div>
+            <label id="eqLabel"class="noHighlight" for="calculator"> Equation: </label>
+            <div id="output"><input name="calculator_output" type="text" id="calculator_output" value="@@EQUATION@@" onchange="validate();"/></div>
+		<ul id="calculatorKeyboard">		
+			<li id="key_1" data-value="1">1</li>
+			<li id="key_2" data-value="2">2</li>
+			<li id="key_3" data-value="3">3</li>
+			<li id="key_plus" data-value="+" class="operator">+</li>
+                        <li id="key_var" data-value="var" class="operator">var</li>
+                        
+			<li id="key_4" data-value="4">4</li>
+			<li id="key_5" data-value="5">5</li>
+			<li id="key_6" data-value="6">6</li>
+			<li id="key_minus" data-value="-" class="operator">-</li>
+                        <li id="key_power" data-value="^" class="operator">^</li>
+			
+			<li id="key_7" data-value="7">7</li>
+			<li id="key_8" data-value="8">8</li>
+			<li id="key_9" data-value="9">9</li>
+			<li id="key_multiply" data-value="*" class="operator">*</li>
+                        <li id="key_openpar" data-value="(" class="operator">(</li>
+			
+			<li id="key_0" data-value="0" class="double">0</li>
+			<li id="key_period" data-value="." class="operator">.</li>			
+			<li id="key_slash" data-value="/" class="operator">/</li>
+                        <li id="key_closepar" data-value=")" class="operator">)</li>
+			
+			<li id="key_c" data-value="c" class="double summary">C</li>
+			<li id="key_backspace" data-value="bks" class="triple summary">BACKSPACE</li>			
+		</ul>
+	</div>
+        <input type="hidden" name="process_id" value="@@PROCESS_ID@@"/>
+        <input id="equation_submit" type="submit" name="submit" value="SUBMIT" @@IS_DISABLED@@/>
+        
+    <div id="validation_results">
+        <p id="valid" style="color: white">Properly Formatted Equation</p>
+    </div>
+        
+    <div id="variable_form" style="display: none;" title="Add Variable" >
+        <label for="variable_select">Select a Variable to Add:</label><br/>
+        <select name="variable_select" id="variable_select">
+            <option value=""></option>
+        </select>
+    </div>
+        
+</div>
+    <div style="clear: both;">&nbsp;</div>
+</form>
