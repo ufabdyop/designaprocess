@@ -48,6 +48,7 @@ var all_processes = new indexer();
 		$process_index[0]['category'];
                 $all_input_fields = array(); 
                 $parameters = array(); 
+                $all_parameters = array(); 
 		foreach($fields as $parameter) {
 			$parameter['name']  = preg_replace('/[^a-zA-Z0-9_]/', '_', $parameter['name']); //replace chars that can't be in javascript variables
                         
