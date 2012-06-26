@@ -10,7 +10,7 @@ Installation
  
 
 
-== Pending Tasks ==
+### Pending Tasks
 * ~~Change significant digits on equation calculations to 3~~ 
 * Add the units to the calculation
 * Put up a project site to share with the world: github?
