@@ -1,12 +1,14 @@
 function write_equation_output(name, humanized, equation, result, id) {
 	if ($('#equations_output').html() == "" ) {
 		var equations_output_head = "<div class=\"equation_evaluations\">\n<h3>Equation Evaluations</h3>\n<table id=\"equation_evaluations_table\">";
-		equations_output_head += "<tr><th>Name</th><th>Definition</th><th>Evaluation</th><th>Unit</th></tr>";
+		equations_output_head += "<tr><th>Name</th><th>Value</th><th>Unit</th><th>Definition</th><th>Evaluation</th></tr>";
 		var equations_output_tail = "</table>\n</div>\n";
 		$('#equations_output').html(equations_output_head + equations_output_tail);
 	}
 
-	var new_row = '<td>' + name + '</td><td>' + humanized + '</td><td>' + equation + '</td><td>' + result + '</td>';
+	var unit = 'tbd';
+
+	var new_row = '<td>' + name + '</td><td>' + result + '</td><td>' + unit + '</td><td>' +  humanized + '</td><td>' + equation + '</td>';
 	if ($('#equation_' + id).length > 0) {
 		$('#equation_' + id).html(new_row);
 	} else {
