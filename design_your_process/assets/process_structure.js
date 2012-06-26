@@ -226,7 +226,7 @@ function evaluate_equation(process, equation, inputs) {
     var final_equation = practical_equation;
     for ( var id in inputs ) {
         msg += "Replacing regex /var_id" + id + '/ with ' + inputs[id] + "\n";
-        var final_equation = final_equation.replace('var_id' + id , inputs[id]);
+        var final_equation = final_equation.replace(new RegExp('var_id' + id, 'g') , inputs[id]);
         msg += "Result: " + final_equation + "\n";
     }
     
@@ -239,9 +239,8 @@ function evaluate_equation(process, equation, inputs) {
 }
 
 function run_calculation(process, equation, inputs) {
-    var final_equation = evaluate_equation(process, equation, inputs);
-    
         try {
+	    var final_equation = evaluate_equation(process, equation, inputs);
             var calculation_result = calculator.parse(final_equation);
             return calculation_result;
         } catch (error) {

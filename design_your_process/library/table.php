@@ -20,6 +20,11 @@ function rows_to_table($rows, $links = array() , $link_var = '', $additional_get
             $editable_fields = $additional_options['editable_fields'];
         }
 
+        $id_field = 'id';
+        if (isset($additional_options['id_field'])) {
+            $id_field = $additional_options['id_field'];
+        }
+
         $hidden_fields = array();
         if (isset($additional_options['hidden_fields'])) {
             $hidden_fields = $additional_options['hidden_fields'];
@@ -70,8 +75,8 @@ function rows_to_table($rows, $links = array() , $link_var = '', $additional_get
                                 if (preg_match('/[^\d]/', $fieldname)) {
                                     if (in_array($fieldname, $editable_fields)) {
                                             $id_html = "";
-                                            if (isset($row['id'])) {
-                                                $id_html = " id =\"" . $fieldname . '_' . $row['id'] . '"';
+                                            if (isset($row[$id_field])) {
+                                                $id_html = " id =\"" . $fieldname . '_' . $row[$id_field] . '"';
                                             }
                                         $content .= "\t\t<td><input type=\"text\" name=\"$fieldname" . "[]\" $id_html></input></td>\n";
                                     } else {
@@ -96,6 +101,7 @@ function user_input_table($process_id, $links, $hide_ids = true){
     $options = array();
     if ($hide_ids) {
         $options = array('hidden_fields' => array('parameter_id' ),
+                         'id_field' => 'parameter_id',
                          'editable_fields' => array('value'));
     }
     if ($fields) {
