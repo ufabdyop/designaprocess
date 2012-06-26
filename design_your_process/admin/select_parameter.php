@@ -28,9 +28,9 @@
                     array('title' => 'Delete', 'page' => 'delete_parameter.php', 'extra' => ' class="delete-button" onclick="return confirm(\'Are you sure?\')" title="Delete Parameter"')
                     );
     $title = "$process_name \n";
-    $content .= user_input_table($process_id, $links, false);
-    $content .= process_parameter_table($process_id, $links, false);
-    $content .= predicted_result_table($process_id, $links, false);
+    $content .= user_input_table($process_id, $links );
+    $content .= process_parameter_table($process_id, $links );
+    $content .= predicted_result_table($process_id, $links);
     $links = array( 
                     array('title' => 'Edit', 'page' => 'edit_equation.php', 'extra' => ' title="Edit Equation" class="edit-button"'),
                     array('title' => 'Delete', 'page' => 'delete_equation.php', 'extra' => ' title="Delete Equation" class="delete-button" onclick="return confirm(\'Are you sure?\')"')

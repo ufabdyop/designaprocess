@@ -25,7 +25,6 @@ function rows_to_table($rows, $links = array() , $link_var = '', $additional_get
             $hidden_fields = $additional_options['hidden_fields'];
         }
 
-
         $content = '<table>' . "\n";
         if ($rows) {
                 //print header
@@ -42,6 +41,8 @@ function rows_to_table($rows, $links = array() , $link_var = '', $additional_get
                             if (in_array($fieldname, $hidden_fields)) {
 
                             } else {
+				$english_name = str_replace('_', ' ', $fieldname);
+				$english_name = ucwords($english_name);
                                 $content .= "\t\t<th>$fieldname</th>\n";
                             }
                         }
@@ -87,14 +88,14 @@ function rows_to_table($rows, $links = array() , $link_var = '', $additional_get
 }
         
 function user_input_table($process_id, $links, $hide_ids = true){
-    $sql = "SELECT process_form.parameter_id as id, name, process_form.value, unit 
+    $sql = "SELECT process_form.parameter_id , name, process_form.value, unit 
             FROM process_form LEFT JOIN parameter on process_form.parameter_id = parameter.id
             WHERE process_form.process_id = '$process_id' AND is_input_field = '1' ORDER BY name";
     $fields = db_query($sql);
     
     $options = array();
     if ($hide_ids) {
-        $options = array('hidden_fields' => array('id', 'parameter_id'),
+        $options = array('hidden_fields' => array('parameter_id' ),
                          'editable_fields' => array('value'));
     }
     if ($fields) {
