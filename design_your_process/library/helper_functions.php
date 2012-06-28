@@ -229,11 +229,15 @@ function get_parameter($id) {
         return $database_rows; 
 } 
 function get_parameter_for_process ($process_id , $parameter_id){   
-        $sql="SELECT p.name, pf.value FROM process_form pf  
+        $sql="SELECT p.name, is_process_parameter, is_input_field, is_measured_result, pf.value FROM process_form pf  
             left join  parameter p on p.id = pf.parameter_id 
             WHERE parameter_id = '$parameter_id' and process_id = '$process_id'"; 
         $results = db_query($sql); 
-        return $results[0]; 
+        if ($results) {
+            return $results[0]; 
+        } else {
+            return array();
+        }
 } 
 function add_equation ($process_id , $name, $unit, $equation){
         $sql = "INSERT INTO equation (process_id , name, equation, unit) VALUES ('$process_id' , '$name' , '$equation', '$unit')";

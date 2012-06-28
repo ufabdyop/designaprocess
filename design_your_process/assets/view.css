@@ -960,3 +960,7 @@ div#bottom_shadow {
     height: 80px;
     
 }
+
+tr.error_row td {
+    background-color: #FCC;
+}

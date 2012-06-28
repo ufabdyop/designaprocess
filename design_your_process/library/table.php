@@ -104,6 +104,7 @@ function user_input_table($process_id, $links, $hide_ids = true){
                          'id_field' => 'parameter_id',
                          'editable_fields' => array('value'));
     }
+    $content = "";
     if ($fields) {
             $content .= "<div class=\"is_input_field\">\n";
             $content .= "<h3>User Inputs</h3>\n";
@@ -121,6 +122,7 @@ function process_parameter_table($process_id, $links, $hide_ids = true){
     if ($hide_ids) {
         $options = array('hidden_fields' => array('parameter_id'));
     }
+    $content = "";
     if ($fields) {
             $content .= "<div class=\"is_process_parameter\">\n";
             $content .= "<h3>Process Parameters</h3>\n";
@@ -138,6 +140,8 @@ function predicted_result_table ($process_id, $links, $hide_ids = true){
     if ($hide_ids) {
         $options = array('hidden_fields' => array('parameter_id'));
     }
+    $content = "";
+    
     if ($fields) {
             $content .= "<div class=\"is_measured_result\">\n";
             $content .= "<h3>Predicted Results</h3>\n";
@@ -151,6 +155,7 @@ function equation_table ($process_id, $links){
     $fields = db_query($sql);
     $options = array('hidden_fields' => array('parameter_id'));
     
+    $content = "";
     if($fields){
             $content .= "<div class=\"is_equation\">\n";
             $content .= "<h3>Equations</h3>\n";
@@ -174,6 +179,7 @@ function process_notes_table ($process_id, $allow_edit = true) {
     $fields = db_query($sql);
     $options = array('hidden_fields' => array('id'));
     
+    $content = "";
     if($fields){
             $content .= "<div class=\"process_table\">\n";
             $content .= "<h3>Notes</h3>\n";
@@ -190,12 +196,14 @@ function equations_table ($process_id) {
                     );
     $sql = "SELECT id, name, equation, unit FROM equation WHERE process_id = '$process_id'";
     $fields = db_query($sql);
+    $content = "";
     if($fields){
-    $content .= "<div class=\"is_equation\">\n";
-    $content .= "<h3>Equations</h3>\n";
-    $content .= rows_to_table($fields, $links, 'id','&process_id='.$process_id);
-    $content .= "</div>\n";
+        $content .= "<div class=\"is_equation\">\n";
+        $content .= "<h3>Equations</h3>\n";
+        $content .= rows_to_table($fields, $links, 'id','&process_id='.$process_id);
+        $content .= "</div>\n";
     }
+    return $content;
 }
 
 

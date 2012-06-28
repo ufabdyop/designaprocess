@@ -1,4 +1,4 @@
-function write_equation_output(name, humanized, equation, result, id, unit) {
+function write_equation_output(name, humanized, equation, result, id, unit, success) {
 	if ($('#equations_output').html() == "" ) {
 		var equations_output_head = "<div class=\"equation_evaluations\">\n<h3>Equation Evaluations</h3>\n<table id=\"equation_evaluations_table\">";
 		equations_output_head += "<tr><th>Name</th><th>Value</th><th>Unit</th><th>Definition</th><th>Evaluation</th></tr>";
@@ -7,6 +7,9 @@ function write_equation_output(name, humanized, equation, result, id, unit) {
 	}
 
 	//var unit = 'tbd';
+        if (unit == null) {
+            unit = 'N/A';
+        }
 
 	var new_row = '<td>' + name + '</td><td>' + result + '</td><td>' + unit + '</td><td>' +  humanized + '</td><td>' + equation + '</td>';
 	if ($('#equation_' + id).length > 0) {
@@ -15,6 +18,12 @@ function write_equation_output(name, humanized, equation, result, id, unit) {
 		new_row = '<tr id="' + 'equation_' + id + '">' + new_row + '</tr>' + "\n";
 		$('#equation_evaluations_table').append(new_row);
 	}
+        
+        if (success) {
+            $('#equation_' + id).removeClass('error_row');
+        } else {
+            $('#equation_' + id).addClass('error_row');
+        }
 }
 
 /**
@@ -39,15 +48,17 @@ function evaluate(event) {
     for (var eq in process.equations) {
         var equation = process.equations[eq];
         var result ;
+        var equation_human_name = equation_to_human_name(equation.equation);
+        var equation_with_replacements = evaluate_equation(process, equation.name, params);
+        var success = true;
         try {
 		result = run_calculation(process, equation.name, params);
 		result = result.toPrecision(3);
-		var equation_human_name = equation_to_human_name(equation.equation);
-		var equation_with_replacements = evaluate_equation(process, equation.name, params);
         } catch (error) {
 		result = error;
+                success = false;
         }
-	write_equation_output(equation.name, equation_human_name, equation_with_replacements, result, equation.id, equation.unit);
+	write_equation_output(equation.name, equation_human_name, equation_with_replacements, result, equation.id, equation.unit, success);
     }
 }
     

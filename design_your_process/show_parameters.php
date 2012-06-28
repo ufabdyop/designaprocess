@@ -14,8 +14,9 @@
     if ($process_index) {
             $process_name = $process_index[0][1] . ' | ' .$process_index[0][2] . ' | ' .$process_index[0][3] . ' | '.$process_index[0][4] ;
     }
+    $links = array();
     $title = "$process_name\n";
-    $content .= user_input_table($process_id, $links, true);
+    $content = user_input_table($process_id, $links, true);
     $content .= '<div id="equations_output"></div>';
     $content .= process_parameter_table($process_id, $links, true);
     $content .= predicted_result_table($process_id, $links, true);

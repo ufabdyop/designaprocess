@@ -85,7 +85,8 @@ var all_processes = new indexer();
                         }
 			$parameter_name = $parameter['name'];
 			if ($parameter_name) {
-				$all_parameters[$parameter_name] = array('unit' => $unit, 'id' => $parameter['id']);
+                            $unit = ( isset($unit) ? $unit : null );
+                            $all_parameters[$parameter_name] = array('unit' => $unit, 'id' => $parameter['id']);
 			}
 		}
                 
@@ -114,14 +115,20 @@ var all_processes = new indexer();
                         $param_id = $matches[1][$i];
                         $variable = $matches[0][$i];
                         $parameter = get_parameter_for_process($process_id, $param_id);
-                        $param_value = $parameter['value'];
+                        $param_value = (isset( $parameter['value'] ) ? $parameter['value'] : null) ;
+                        $is_input = (isset( $parameter['is_input_field'] ) ? $parameter['is_input_field'] : 0) ;
                         echo "//param_value: $param_value\n";
                         if ($param_value) {  
                             $new_equation = str_replace($variable, $param_value, $new_equation);
                             echo "//replacing $variable with $param_value\n";
                         } else {
-                            $new_equation = str_replace($variable, 'var_id' . $param_id, $new_equation);
-                            echo "//replacing $variable with var_id$param_id\n";
+                            if ($is_input) {
+                                $new_equation = str_replace($variable, 'var_id' . $param_id, $new_equation);
+                                echo "//replacing $variable with var_id$param_id\n";
+                            } else {
+                                $new_equation = str_replace($variable, ' null ', $new_equation);
+                                echo "//replacing $variable with var_id$param_id\n";
+                            }
                         }
                     }
                     $new_equation = preg_replace($variable_regex, 'var_id$1', $new_equation);
