@@ -18,7 +18,6 @@ String.prototype.splice = function( idx, rem, s ) {
     
     function button_click(event) {
         var button = $(event.target).attr('data-value');
-	var cursor = $('#calculator_output')[0].selectionStart;
         switch (button){
             case 'c':
                 clear();
@@ -30,14 +29,20 @@ String.prototype.splice = function( idx, rem, s ) {
                 add_variable();
                 break;
             default:
-                var value = $('#calculator_output').val();
-		value = value.splice(cursor, 0, button);
-                $('#calculator_output').val(value);
-		$('#calculator_output')[0].selectionStart = cursor + button.length;
-		$('#calculator_output')[0].selectionEnd = cursor + button.length;
+                insert_value_into_equation(button);
                 break;    
         }
         validate();
+    }
+    
+    function insert_value_into_equation(insertion) {
+        var cursor = $('#calculator_output')[0].selectionStart;
+        var value = $('#calculator_output').val();
+        var selectionSize = $('#calculator_output')[0].selectionEnd - $('#calculator_output')[0].selectionStart;
+        value = value.splice(cursor, selectionSize, insertion);
+        $('#calculator_output').val(value);
+        $('#calculator_output')[0].selectionStart = cursor + insertion.length;
+        $('#calculator_output')[0].selectionEnd = cursor + insertion.length;
     }
     
     function select_variable() {
@@ -48,9 +53,8 @@ String.prototype.splice = function( idx, rem, s ) {
             modal: true,
             buttons: {
                 "Add Variable": function () {
-                    var expression = $('#calculator_output').val();
                     var choice = $('#variable_select').val();
-                    $('#calculator_output').val(expression + ' ' + choice);
+                    insert_value_into_equation(choice);
                     validate();
                     $(this).dialog('close');
                 },
@@ -75,15 +79,30 @@ String.prototype.splice = function( idx, rem, s ) {
         select_variable();
     }
     
+    function check_expression_has_invalid_variables(expression) {
+        var used_variables = expression.match(/var_(id\d+[A-Za-z_]*)/);
+        for(var i = 0; i < used_variables.length; i++ ) {
+            var variable_under_test = used_variables[i];
+            if (available_variables.indexOf(variable_under_test) == -1) {
+                throw ("Variable not available in this process: " + variable_under_test);
+            }
+        }
+
+    }
+    
     function validate() {
         expression = $('#calculator_output').val();
         var result ;
         try {
             calculator.parse(expression);
+            check_expression_has_invalid_variables(expression);
             result = '<p id="valid" style="color: white">Properly Formatted Equation</p>';
+            $('#error_display').hide();
             enable_submit();
         } catch( e) {
             result = '<p id="invalid" style="color: white">Equation Format Error!</p>';
+            $('#error_display').html(e);
+            $('#error_display').show(e);
             disable_submit();
         }
         $('#validation_results').html(result);

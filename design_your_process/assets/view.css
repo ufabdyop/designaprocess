@@ -964,3 +964,11 @@ div#bottom_shadow {
 tr.error_row td {
     background-color: #FCC;
 }
+
+#error_display {
+    background-color: #fcc;
+    padding: 20px;
+    border: 1px solid #faa;
+    margin-bottom: 10px;
+    display: none;
+}
