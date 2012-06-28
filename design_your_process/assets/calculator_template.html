@@ -80,9 +80,9 @@ String.prototype.splice = function( idx, rem, s ) {
     }
     
     function check_expression_has_invalid_variables(expression) {
-        var used_variables = expression.match(/var_(id\d+[A-Za-z_]*)/);
+        var used_variables = expression.match(/var_(id\d+[A-Za-z_]*)/g);
         for(var i = 0; i < used_variables.length; i++ ) {
-            var variable_under_test = used_variables[i];
+            var variable_under_test = used_variables[i].substring(4); //get rid of var_
             if (available_variables.indexOf(variable_under_test) == -1) {
                 throw ("Variable not available in this process: " + variable_under_test);
             }
