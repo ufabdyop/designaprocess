@@ -1,4 +1,4 @@
-function write_equation_output(name, humanized, equation, result, id) {
+function write_equation_output(name, humanized, equation, result, id, unit) {
 	if ($('#equations_output').html() == "" ) {
 		var equations_output_head = "<div class=\"equation_evaluations\">\n<h3>Equation Evaluations</h3>\n<table id=\"equation_evaluations_table\">";
 		equations_output_head += "<tr><th>Name</th><th>Value</th><th>Unit</th><th>Definition</th><th>Evaluation</th></tr>";
@@ -6,7 +6,7 @@ function write_equation_output(name, humanized, equation, result, id) {
 		$('#equations_output').html(equations_output_head + equations_output_tail);
 	}
 
-	var unit = 'tbd';
+	//var unit = 'tbd';
 
 	var new_row = '<td>' + name + '</td><td>' + result + '</td><td>' + unit + '</td><td>' +  humanized + '</td><td>' + equation + '</td>';
 	if ($('#equation_' + id).length > 0) {
@@ -47,7 +47,7 @@ function evaluate(event) {
         } catch (error) {
 		result = error;
         }
-	write_equation_output(equation.name, equation_human_name, equation_with_replacements, result, equation.id);
+	write_equation_output(equation.name, equation_human_name, equation_with_replacements, result, equation.id, equation.unit);
     }
 }
     

@@ -149,12 +149,54 @@ function predicted_result_table ($process_id, $links, $hide_ids = true){
 function equation_table ($process_id, $links){
     $sql = "SELECT id, name, equation, unit FROM equation WHERE process_id = '$process_id'";
     $fields = db_query($sql);
+    $options = array('hidden_fields' => array('parameter_id'));
+    
     if($fields){
             $content .= "<div class=\"is_equation\">\n";
             $content .= "<h3>Equations</h3>\n";
-            $content .= rows_to_table($fields, $links, 'id','&process_id='.$process_id);
+            $content .= rows_to_table($fields, $links, 'id','&process_id='.$process_id, $options);
             $content .= "</div>\n";
             return $content;
     }
 }
+function process_notes_table ($process_id, $allow_edit = true) {
+    if ($allow_edit) {
+        $links = array( 
+                    array('title' => 'Edit', 'page' => 'edit_note.php', 'extra' => ' title="Edit Note" class="edit-button"'),
+                    array('title' => 'Delete', 'page' => 'delete_note.php', 'extra' => ' class="delete-button" onclick="return confirm(\'Are you sure?\')" title="Delete Note"')
+                    );
+    } else {
+        $links = array();
+    }
+
+    
+    $sql = "SELECT id, note, date_modified, author FROM process_notes WHERE process_id = '$process_id' and active = '1'";
+    $fields = db_query($sql);
+    $options = array('hidden_fields' => array('id'));
+    
+    if($fields){
+            $content .= "<div class=\"process_table\">\n";
+            $content .= "<h3>Notes</h3>\n";
+            $content .= rows_to_table($fields, $links, 'id','&process_id='.$process_id, $options);
+            $content .= "</div>\n";
+            return $content;
+    }
+}
+
+function equations_table ($process_id) {
+    $links = array( 
+                    array('title' => 'Edit', 'page' => 'edit_equation.php', 'extra' => ' title="Edit Equation" class="edit-button"'),
+                    array('title' => 'Delete', 'page' => 'delete_equation.php', 'extra' => ' title="Delete Equation" class="delete-button" onclick="return confirm(\'Are you sure?\')"')
+                    );
+    $sql = "SELECT id, name, equation, unit FROM equation WHERE process_id = '$process_id'";
+    $fields = db_query($sql);
+    if($fields){
+    $content .= "<div class=\"is_equation\">\n";
+    $content .= "<h3>Equations</h3>\n";
+    $content .= rows_to_table($fields, $links, 'id','&process_id='.$process_id);
+    $content .= "</div>\n";
+    }
+}
+
+
 ?>

@@ -1,5 +1,6 @@
 <?php
 require_once('../library/helper_functions.php');
+require_once('../library/form.php');
 require_once('redirect_non_admins.php');
 $message="";
 
@@ -30,76 +31,81 @@ $title = "Enter Parameters";
 ob_clean();
 ob_start();
 	
+$form = new Form();
+$form->open();
+$form->input(
+            array(
+                'label' => 'Parameter',
+                'name' => 'parameter',
+                'id' => 'parameter',
+                'class' => 'element text medium'
+            )
+        );
+$form->input(
+            array(
+                'label' => 'Unit',
+                'name' => 'unit',
+                'id' => 'unit',
+                'class' => 'element text medium'
+            )
+        );
+$form->input(
+            array(
+                'label' => 'Value',
+                'name' => 'value',
+                'id' => 'value',
+                'class' => 'element text medium'
+            )
+        );
+$form->radio_list(
+            array(
+                'label' => 'Parameter Type',
+                'name' => 'parameter_type',
+                'radios' => array(
+                    array('id'=>'input_radio', 'class' => 'element radio', 'value' => 'input', 'label' => 'Input'),
+                    array('id'=>'process_parameter_radio', 'class' => 'element radio', 'value' => 'process_parameter', 'label' => 'Process Parameter'),
+                    array('id'=>'measured_result_radio', 'class' => 'element radio', 'value' => 'measured_result', 'label' => 'Predicted Result'),
+                )
+            )
+        );
+$form->input(
+            array(
+                'label' => 'Confidence Level',
+                'name' => 'confidence',
+                'id' => 'confidence',
+                'class' => 'element text medium'
+            )
+        );
+
+$form->textarea(
+            array(
+                'label' => 'Data Origin',
+                'name' => 'data_origin',
+                'id' => 'data_origin',
+                'class' => 'element text medium origin_desc'
+            )
+        );
+
+$form->submit(
+            array('name' => 'submit',
+                'value' => 'Submit')
+        );
+$form->submit(
+            array('name' => 'finish',
+                'value' => 'Finish')
+        );
+
+
 ?>
 <script language="javascript" src="../assets/toggle.js"> </script>
+  <form id="form_387875" class="appnitro" method="post" action="">
 
-		<form id="form_387875" class="appnitro"  method="post" action="">
-                                            <ul>
-					<li id="li_1" >
-				<label class="description" for="element_1">Parameter </label>
-		<div>
-			<input id="element_1" name="parameter" class="element text medium" type="text" maxlength="255" value=""/> 
-		</div> 
-		</li>
-</th>
-<th>
-		<li id="li_2" >
-		<label class="description" for="element_2">Unit </label>
-		<div>
-			<input id="element_2" name="unit" class="element text medium" type="text" maxlength="255" value=""/> 
-		</div> 
-		</li>
-</th>
-<th>
-		<li id="li_3" >
-		<label class="description" for="element_3">Value </label>
-		<div>
-			<input id="element_3" name="value" class="element text medium" type="text" maxlength="255" value=""/> 
-		</div> 
-		</li>
-</th>
-<th>
-		<li id="li_4" >
-		<label class="description" for="element_4">Parameter Type </label>
-		<span>
-<input id="input_radio" name="parameter_type" class="element radio" type="radio" value="input" />
-<label class="choice" for="input_radio">Input</label>
-<input id="process_parameter_radio" name="parameter_type" class="element radio" type="radio" value="process_parameter" />
-<label class="choice" for="process_parameter_radio">Process Parameter </label>
-<input id="measured_result_radio" name="parameter_type" class="element radio" type="radio" value="measured_result" />
-<label class="choice" for="measured_result_radio">Predicted Result </label>
-</th>
-<th>
-		<li id="li_5" >
-		<label class="description" for="confidence">Confidence Level </label>
-		<div>
-			<input  id="confidence" name="confidence" class="element text medium" type="text" maxlength="1024" value=""/> 
-		</div> 
-		</li>
-</th>
-<th>
-		<li id="li_6" >
-		<label class="description" for="data_origin">Data Origin </label>
-		<div>
-			<textarea  id="data_origin" name="data_origin" class="origin_desc" type="text" maxlength="1024" value=""/> 
-                        </textarea>
-		</div> 
-		</li>
-</th>
-
-</tr>
-</table>
-		</span> 
-		</li>	
-					<li class="buttons">
-			    <input type="hidden" name="form_id" value="387875" />
-			    
-				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
-                                <input id="finish" class="button_text" type="submit" name="finish" value="Finish" />   
-                                
-		</li>
-			</ul>
-		</form>	
+      <li class="buttons">
+          <?=$form->html();?>
+      </li>
+    </ul>
+  </form>
+		
 <?php
 $content = ob_get_clean();
 load_template('template.html', array('TITLE' => $title, 'CONTENT' => $content, 'INSTRUCTIONS' => '','MESSAGES' => $message ));

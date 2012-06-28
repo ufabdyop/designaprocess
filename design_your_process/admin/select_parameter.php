@@ -31,18 +31,10 @@
     $content .= user_input_table($process_id, $links );
     $content .= process_parameter_table($process_id, $links );
     $content .= predicted_result_table($process_id, $links);
-    $links = array( 
-                    array('title' => 'Edit', 'page' => 'edit_equation.php', 'extra' => ' title="Edit Equation" class="edit-button"'),
-                    array('title' => 'Delete', 'page' => 'delete_equation.php', 'extra' => ' title="Delete Equation" class="delete-button" onclick="return confirm(\'Are you sure?\')"')
-                    );
-    $sql = "SELECT id, name, equation, unit FROM equation WHERE process_id = '$process_id'";
-    $fields = db_query($sql);
-    if($fields){
-    $content .= "<div class=\"is_equation\">\n";
-    $content .= "<h3>Equations</h3>\n";
-    $content .= rows_to_table($fields, $links, 'id','&process_id='.$process_id);
-    $content .= "</div>\n";
-    }
+    $content .= process_notes_table ($process_id);
+    $content .= equations_table ($process_id );
+    
+    $content .= '<br/>';
     
     //add new parameter button
     $content .= "<a class=\"button\" href=\"new_parameter.php?process_id=$process_id\">
@@ -54,6 +46,12 @@
     $content .= "<a class=\"button\" href=\"new_equation.php?process_id=$process_id\">
                     <span class=\"ui-icon ui-icon-plus ui-icon-shadow\">&nbsp;</span>
                     <span class=\"button_description\">Add new equation</span>
+                </a>\n";
+    
+    //add new note
+    $content .= "<a class=\"button\" href=\"new_note.php?process_id=$process_id\">
+                    <span class=\"ui-icon ui-icon-plus ui-icon-shadow\">&nbsp;</span>
+                    <span class=\"button_description\">Add note</span>
                 </a>\n";
     
     //delete process

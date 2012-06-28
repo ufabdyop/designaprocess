@@ -19,6 +19,7 @@
     $content .= '<div id="equations_output"></div>';
     $content .= process_parameter_table($process_id, $links, true);
     $content .= predicted_result_table($process_id, $links, true);
+    $content .= process_notes_table($process_id, false);
     $content .= '<script src="assets/run_processes.js"></script>';
     $content .= '<input type="hidden" id="process_id" value="' . $process_id . '"></input>';
     

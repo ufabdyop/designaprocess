@@ -11,11 +11,12 @@ Installation
 
 
 ### Pending Tasks
-* Add process notes to each process
+* ~~Add process notes to each process~~
+* Include optional db authentication library
 * Fix alignment for input parameters on admin page
 * Fix issues with equations on Lithography | Photoresist | Multiple | SU - 8 2025
 * ~~Change significant digits on equation calculations to 3~~ 
-* Add the units to the calculation
+* ~~Add the units to the calculation~~
 * ~~Put up a project site to share with the world: github?~~
 * License as open source?
 * Add optional default value for parameters
