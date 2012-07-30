@@ -29,5 +29,22 @@ Installation
 * ~~Each measured result should have a column for data origin (free text for describing where we arrived at these numbers).~~ 
 * Add Run Cards
 
+### Development on Run Card option
+
+First, what constitutes a run card?  It is analagous to a shopping cart in many ways.  In this case, it would be like a shopping cart of 
+processes.  Each process is added to the runcard in a particular order.  A process can be added more than once.  Since processes
+contain input parameters, we want to be able to save the input parameters for each process too.  So, the representation of a 
+saved run card in the database might look like this:
+
+id, order, process_id, input_id, input_value
+1, 1, 5, 12, 750
+1, 1, 5, 13, 55
+1, 2, 6, 19, 250
+
+The above represents a runcard with an id of 1.  The runcard has 2 processes (processes 5 and 6).  The ordering column indicates
+that process 5 comes before process 6.  Process 5 should pre-load its 2 inputs with the input_values indicated.  In this case,
+process 5 has an input with an id of 12, that input should be preloaded with a value of 750.  Similarly, it should preload 
+input 13 with a value of 55.  The next process on that runcard is process 6.  It has a preloaded input (id: 19) with the value of 250.
+
 
 
