@@ -22,8 +22,15 @@
     $content .= predicted_result_table($process_id, $links, true);
     $content .= process_notes_table($process_id, false);
     $content .= '<script src="assets/run_processes.js"></script>';
+    $content .= '<script src="assets/runcard.js"></script>';
     $content .= '<input type="hidden" id="process_id" value="' . $process_id . '"></input>';
     
+    $runcard_button = '
+            <a id="runcard_button" class="button" href="runcard/add_to_runcard.php?process_id=' . $process_id . '">
+                <span class="ui-icon ui-icon-plus ui-icon-shadow">&nbsp;</span>
+                <span class="button_description">Add to Run Card</span>
+            </a>
+    ';
     $admin_button = '
             <a id="admin_button" class="button" href="admin/select_parameter.php?process_id=' . $process_id . '">
                 <span class="ui-icon ui-icon-wrench ui-icon-shadow">&nbsp;</span>
@@ -31,6 +38,7 @@
             </a>
     ';
 
+    $content .= $runcard_button;
     
     load_template('template.html', array('TITLE' => $title, 'CONTENT' => $content, 'DASHBOARD' => $admin_button));
 ?>
