@@ -379,6 +379,7 @@ if ( ! function_exists('form_radio'))
 		if ( ! is_array($data))
 		{
 			$data = array('name' => $data);
+			$data = array('id' => $data);
 		}
 
 		$data['type'] = 'radio';
@@ -454,6 +455,8 @@ if ( ! function_exists('form_button'))
 		return "<button "._parse_form_attributes($data, $defaults).$extra.">".$content."</button>";
 	}
 }
+// ------------------------------------------------------------------------
+
 
 // ------------------------------------------------------------------------
 
@@ -954,7 +957,7 @@ if ( ! function_exists('_attributes_to_string'))
 
 			if ( ! isset($attributes['accept-charset']) AND $formtag === TRUE)
 			{
-				$atts .= ' accept-charset="'.strtolower(config_item('charset')).'"';
+				//$atts .= ' accept-charset="'.strtolower(config_item('charset')).'"';
 			}
 
 			foreach ($attributes as $key => $val)
@@ -968,6 +971,33 @@ if ( ! function_exists('_attributes_to_string'))
 }
 
 // ------------------------------------------------------------------------
+
+/**
+ * Styled Button
+ *
+ * @access	public
+ * @param	mixed
+ * @param	string
+ * @param	string
+ * @return	string
+ */
+if ( ! function_exists('styled_button'))
+{
+	function styled_button($link = '', $name = '', $type = 'plus', $classes = array(), $extra = array())
+	{
+            $ex = '';
+            foreach($extra as $k => $v) {
+                $ex .= ' ' . $k . '=' . '"' . $v . '"';
+            }
+            $class = 'button ' . implode(' ', $classes);
+            $content = "<a class=\"$class\" href=\"$link\" $ex>
+                            <span class=\"ui-icon ui-icon-$type ui-icon-shadow\">&nbsp;</span>
+                            <span class=\"button_description\">$name</span>
+                        </a>\n";
+            return $content;
+
+	}
+}
 
 
 

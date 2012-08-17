@@ -26,7 +26,7 @@
     $content .= '<input type="hidden" id="process_id" value="' . $process_id . '"></input>';
     
     $runcard_button = '
-            <a id="runcard_button" class="button" href="runcard/add_to_runcard.php?process_id=' . $process_id . '">
+            <a id="runcard_button" class="button" href="runcard/select_card.php?process_id=' . $process_id . '">
                 <span class="ui-icon ui-icon-plus ui-icon-shadow">&nbsp;</span>
                 <span class="button_description">Add to Run Card</span>
             </a>

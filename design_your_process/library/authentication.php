@@ -46,5 +46,25 @@ class Authentication {
 	function logout() {
 		unset($_SESSION['dsp_logged_in_user']);
 	}
+        function enforce_must_login() {
+            if (!$this->is_logged_in())  {
+                $current_page = ($_SERVER['REQUEST_URI']);
+                
+                //put posts into get
+                if (isset($_POST)) {
+                    if (strpos($current_page, '?') === false) {
+                        $current_page .= '?';
+                    } else {
+                        $current_page .= '&';
+                    }
+                    foreach($_POST as $key => $val) {
+                        $current_page .= urlencode($key) . '=' . urlencode($val) . "&";
+                    }
+                    $current_page = trim($current_page, '&');
+                }
+                $current_page = base64_encode($current_page);
+                header("Location: login.php?redirect_to=$current_page");
+            }
+        }
 }
 ?>

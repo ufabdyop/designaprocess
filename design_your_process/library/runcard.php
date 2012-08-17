@@ -11,11 +11,51 @@
 		var $public;
 		var $process_forms = array();
 
-		public function get_all() {
+                private static function get_subset($where_clause) {
+			$q = "select * from runcard where $where_clause";
+			$results = db_query_with_column_names($q);
+                        $result_set = array();
+                        foreach($results as $row) {
+                            $rc = new Runcard;
+                            $rc->initialize(array($row));
+                            $result_set[] = $rc;
+                        }
+                        return $result_set;
+                }
+                
+		/**
+		* 
+		 * returns all Runcards from the database 
+		 * @return the runcard object array
+		 */
+                public static function get_all() {
+                    return Runcard::get_subset(" 1 = 1 ");
 		}
+                
+                
+		/**
+		* 
+		 * returns all public Runcards from the database 
+		 * @return the runcard object array
+		 */
+                public static function get_all_public() {
+                    return Runcard::get_subset(" public = 1 ");
+		}
+                
 
-		public function get_by_user() {
+		/**
+		* 
+		 * returns all Runcards from the database with specific username
+		 * @param $id: string, the username to filter by
+		 * @return the runcard object array
+		 */
+                public static function get_by_username($id) {
+                    return Runcard::get_subset("username = '$id'");
 		}
+                
+                public function get_process_forms() {
+                    return $this->process_forms;
+                }
 
 		/**
 		* 
@@ -39,8 +79,8 @@
 		 * Creates a new Runcard in the database
 		 * @return int, the id of the runcard that was saved 
 		 */
-		public static function create() {
-			db_query("INSERT INTO runcard (username, public) VALUES ('', 0);");
+		public static function create($username = '', $name = '', $public = 0) {
+			db_query("INSERT INTO runcard (username, name, public) VALUES ('$username', '$name', '$public');");
 			$id = last_insert_id();
 			return Runcard::get_by_id($id);
 		}
@@ -100,6 +140,30 @@
 			} else {
 				throw new Exception("Empty result set in initialize");
 			}
+                        
+                        //add associated process_forms and inputs
+                        $runcard_id = $sql_results[0]['id'];
+                        
+                        $sql = "SELECT * FROM runcard_inputs where runcard_id = '$runcard_id' order by ordering, process_id";
+                        $rows = db_query_with_column_names($sql);
+                        $last_process = false;
+                        $new_process = false;
+                        foreach($rows as $row) {
+                            $process_id = $row['process_id'];
+                            if ($last_process != $process_id) {
+                                if ($new_process) {
+                                    $this->add_process_form($new_process);
+                                }
+                                $new_process = Process_form::get_by_id($process_id);
+                            }
+                            if ($row['input_id'] != null) {
+                                $new_process->set_parameter_by_id($row['input_id'], $row['input_value']);
+                            }
+                            $last_process = $process_id;
+                        }
+                        if ($new_process) {
+                            $this->add_process_form($new_process);
+                        }
 		}
 	}
 ?>

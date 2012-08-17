@@ -176,6 +176,19 @@ function create_test_process_form() {
      $parameter = $process_form->set_parameter_by_id($parameter_ids[0], 15);
      $runcard->add_process_form($process_form);
      $runcard->save();
+     
+     $retrieve_card = Runcard::get_by_id($runcard->id);
+     $forms = $retrieve_card->get_process_forms();
+     $this->AssertEquals(count($forms), 1, 'There should be 1 process form attached to this runcard');
+     
+     //add second process_form to runcard
+     $runcard->add_process_form($process_form);
+     $runcard->save();
+
+     $retrieve_card = Runcard::get_by_id($runcard->id);
+     $forms = $retrieve_card->get_process_forms();
+     $this->AssertEquals(count($forms), 2, 'There should be 2 process forms attached to this runcard');
+     
    }
    public function testCreateAndDeleteRunCard() {
      $runcard = Runcard::create();
@@ -187,10 +200,6 @@ function create_test_process_form() {
      } catch (Exception $e) {
         $this->pass("Should have thrown an exception");
      }
-   }
-
-   public function testAddProcessFormToRuncard() {
-     $runcard = Runcard::create();
    }
 
    public function TearDown()

@@ -63,5 +63,9 @@
 			}
 			return true;
 		}
+                
+                public function name($separator = ' | ') {
+                    return implode($separator , array($this->category, $this->process, $this->tool, $this->material));
+                }
 	}
 ?>

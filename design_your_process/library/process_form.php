@@ -1,6 +1,7 @@
 <?php
  require_once('parameter.php');
  require_once('helper_functions.php');
+ require_once('table.php');
 	class Process_form {
 		var $id = null;
 		var $parameters = array();
@@ -47,6 +48,60 @@
                            }
                        }
 			return $returnset;
+		}
+
+		/**
+		* 
+		 * return the parameters array
+		 * @return: an array of parameters 
+		 */
+		public function get_parameters() {
+                    return $this->parameters;
+		}
+                
+		/**
+		* 
+		 * return a subset of the parameters array that contains only inputs
+		 * @return: an array of parameters 
+		 */
+		public function get_input_parameters() {
+                    $returnset = array();
+                    foreach($this->parameters as $p) {
+                        if ($p->is_input_field) {
+                            $returnset[] = $p;
+                        }
+                    }
+                    return $returnset;
+		}
+
+		/**
+		* 
+		 * return a subset of the parameters array that contains only process parameters
+		 * @return: an array of parameters 
+		 */
+		public function get_process_parameters() {
+                    $returnset = array();
+                    foreach($this->parameters as $p) {
+                        if ($p->is_process_parameter) {
+                            $returnset[] = $p;
+                        }
+                    }
+                    return $returnset;
+		}	
+
+		/**
+		* 
+		 * return a subset of the parameters array that contains only measured results
+		 * @return: an array of parameters 
+		 */
+		public function get_measured_result_parameters() {
+                    $returnset = array();
+                    foreach($this->parameters as $p) {
+                        if ($p->is_measured_result) {
+                            $returnset[] = $p;
+                        }
+                    }
+                    return $returnset;
 		}
 
 		/**
@@ -147,6 +202,57 @@
 
 		public function remove_parameter() {
 		}
+                
+                public function to_html() {
+                    $buffer = '';
+
+                    $inputs = $this->get_input_parameters();
+                    $input_table = array();
+                    if ($inputs) {
+                        $buffer .= "<h3>Inputs</h3>\n";
+                        foreach($inputs as $i) {
+                            $input_table[] = array(
+                                'Name' => $i->name,
+                                'Value' => $i->value,
+                                'Unit' => $i->unit,
+                            );
+                        }
+                    }
+                    $buffer .= rows_to_table($input_table);
+
+                    
+                    $parameters = $this->get_process_parameters();
+                    $p_table = array();
+                    if ($parameters) {
+                        $buffer .= "<h3>Process Parameters</h3>\n";
+                        foreach($parameters as $i) {
+                            $p_table[] = array(
+                                'Name' => $i->name,
+                                'Value' => $i->value,
+                                'Unit' => $i->unit,
+                            );
+                        }
+                    }
+                    $buffer .= rows_to_table($p_table);
+                    
+                    $parameters = $this->get_measured_result_parameters();
+                    $m_table = array();
+                    if ($parameters) {
+                        $buffer .= "<h3>Predicted Results</h3>\n";
+                        foreach($parameters as $i) {
+                            $m_table[] = array(
+                                'Name' => $i->name,
+                                'Value' => $i->value,
+                                'Unit' => $i->unit,
+                                'Confidence' => $i->confidence,
+                                'Data Origin' => $i->data_origin,
+                            );
+                        }
+                    }
+                    $buffer .= rows_to_table($m_table) ;
+                    return $buffer;
+                    
+                }
 
 		private function initialize($sql_results) {
 			if ($sql_results) {

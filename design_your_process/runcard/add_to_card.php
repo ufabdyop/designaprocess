@@ -1,21 +1,30 @@
 <?php
-require_once('../library/authentication.php');
-require_once('../library/runcards.php');
-$auth = new Authentication();
+include('runcard_common.php');
 
-if (!$auth->is_logged_in()) {
-	echo "Must be logged in for this feature.";
-	die;
+$process_id = $_REQUEST['process_id'];
+$inputs = $_REQUEST['input_parameter'];
+$runcard_id = null;
+if (isset($_REQUEST['runcard_id'])) {
+    $runcard_id = $_REQUEST['runcard_id'];
+} else {
+    $runcard_name = $_REQUEST['name'];
+    $public = (($_REQUEST['access'] == 'public') ? 1 : 0);
 }
 
-$process_id = addslashes($_POST['process_id']);
-
-$run_cards = get_runcards_for_user($auth->get_user());
-
-foreach($_POST['input_parameter'] as $id => $value) {
-	$id = addslashes($id);
-	$value = addslashes($value);
-	$q = "INSERT INTO runcard (process_id, input_id, input_value) VALUES ('$process_id', '$id', '$value')\n";
-	//db_query($q);  
+//are we creating a new runcard or adding to an existing one?
+if ($runcard_id) {
+    $runcard = Runcard::get_by_id($runcard_id);
+} else {
+    $runcard = Runcard::create($user->username, $runcard_name, $public);
 }
+
+$process_form = Process_form::get_by_id($process_id);
+foreach($inputs as $id => $value) {
+    $process_form->set_parameter_by_id($id, $value);
+}
+
+$runcard->add_process_form($process_form);
+$runcard->save();
+
+header('Location: browse_runcards.php?message=' . urlencode('Process added to Runcard'));
 ?>

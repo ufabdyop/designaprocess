@@ -90,7 +90,7 @@
     float: left;
 }
 
-.edit-button, .delete-button {
+.edit-button, .delete-button, .search-button {
     display: block;
     text-indent: -1000em;
     overflow: none;
@@ -103,6 +103,10 @@
 
 .delete-button {
     background-position: -176px -96px; 
+}
+
+.search-button {
+    background-position: -160px -111px;
 }
 
 #username-label, #password-label {
