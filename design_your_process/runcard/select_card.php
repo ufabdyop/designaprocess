@@ -18,7 +18,7 @@ if ($run_cards) {
 
 
 $hidden_fields = array('process_id' => $_REQUEST['process_id']);
-foreach($_POST['input_parameter'] as $id => $value) {
+foreach($_REQUEST['input_parameter'] as $id => $value) {
     $hidden_fields['input_parameter[' . $id . ']'] = $value;
 }
 

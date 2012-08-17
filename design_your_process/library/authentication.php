@@ -58,12 +58,20 @@ class Authentication {
                         $current_page .= '&';
                     }
                     foreach($_POST as $key => $val) {
-                        $current_page .= urlencode($key) . '=' . urlencode($val) . "&";
+                        if (is_array($val)) {
+                            foreach($val as $k => $v) {
+                                $current_page .= urlencode($key) . "[$k]=" . urlencode($v) . "&";
+                            }
+                        } else {
+                            $current_page .= urlencode($key) . '=' . urlencode($val) . "&";
+                        }
                     }
                     $current_page = trim($current_page, '&');
                 }
+                //echo $current_page;
                 $current_page = base64_encode($current_page);
-                header("Location: login.php?redirect_to=$current_page");
+                
+                header("Location: " . DSPWEBROOT . "admin/login.php?redirect_to=$current_page");
             }
         }
 }

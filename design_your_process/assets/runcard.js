@@ -1,10 +1,5 @@
-$(document).ready(function() {
-	$('#runcard_button').attr('href', 'javascript: select_card()');	
-	$('html').append('<form id="select_card" action="runcard/select_card.php" method="post"></form>');
-        $('.select_card').click(add_to_card);
-});
-
 function select_card() {
+        console.log('select_card called');
 	$('#select_card').find('input').remove();
 	$('[name]=value').each(
 		function() {
@@ -28,5 +23,13 @@ function add_to_card() {
     }
     $('#add_to_card').submit();
 }
+
+$(document).ready(function() {
+	$('#runcard_button').click(select_card);	
+	$('#runcard_button').find('span').click(select_card);	
+	$('html').append('<form id="select_card" action="runcard/select_card.php" method="post"></form>');
+        $('.select_card').click(add_to_card);
+});
+
 
 //

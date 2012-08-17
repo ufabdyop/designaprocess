@@ -118,6 +118,7 @@
 		public function remove() {
 			if ($this->id) {
 				db_query("DELETE FROM runcard WHERE id = '$this->id'");
+                                db_query("DELETE FROM runcard_items WHERE runcard_id = '$this->id'");
 			}
 		}
 
