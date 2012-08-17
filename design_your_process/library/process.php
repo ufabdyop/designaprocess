@@ -1,11 +1,13 @@
 <?php
  require_once('helper_functions.php');
+ require_once('equation.php');
 	class Process {
 		var $id = null;
 		var $category = null;
 		var $process = null;
 		var $tool = null;
 		var $material = null;
+                var $equations = array();
 		
 		/**
 		* Get a process by its ID in the DB
@@ -50,9 +52,12 @@
 				foreach($sql_results[0] as $key => $value) {
 					$this->$key = $value;
 				}	
+                                $id = $sql_results[0]['id'];
+                                $this->equations = Equation::get_by_process_id($id);
 			} else {
 				throw new Exception("Empty result set in initialize");
 			}
+                        
 		}
 
 		public function equals( self $other) {

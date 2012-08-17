@@ -1,6 +1,7 @@
 <?php
  require_once('parameter.php');
  require_once('helper_functions.php');
+ require_once('form_helper.php');
  require_once('table.php');
 	class Process_form {
 		var $id = null;
@@ -208,6 +209,7 @@
 
                     $inputs = $this->get_input_parameters();
                     $input_table = array();
+                    $input_hiddens = '';
                     if ($inputs) {
                         $buffer .= "<h3>Inputs</h3>\n";
                         foreach($inputs as $i) {
@@ -216,6 +218,7 @@
                                 'Value' => $i->value,
                                 'Unit' => $i->unit,
                             );
+                            $input_hiddens .= form_hidden($i->id, $i->value);
                         }
                     }
                     $buffer .= rows_to_table($input_table);
@@ -250,6 +253,27 @@
                         }
                     }
                     $buffer .= rows_to_table($m_table) ;
+                    
+                    $parameters = $this->process->equations;
+                    $p_table = array();
+                    if ($parameters) {
+                        $buffer .= "<h3>Equations</h3>\n";
+                        foreach($parameters as $i) {
+                            $i->equation = preg_replace('/var_id\d*_/', '', $i->equation);
+                            $p_table[] = array(
+                                'Name' => $i->name,
+                                'Value' => '<span class="equation" rc-equation-name="' . $i->name .'" rc-equation-id="' . $i->id .'" rc-process-id="' . $i->process_id . '">' 
+                                                    . $i->equation . $input_hiddens
+                                           . '</span>',
+                                'Evaluation' => '<span class="equation_evaluation"></span>',
+                                'Unit' => $i->unit,
+                            );
+                        }
+                    }
+                    $buffer .= rows_to_table($p_table);
+                    
+                    
+                    
                     return $buffer;
                     
                 }

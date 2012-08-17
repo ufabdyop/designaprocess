@@ -17,6 +17,10 @@ foreach($process_forms as $pf) {
 
 $content = ob_get_clean();
 $title = "View Runcard: " . $runcard->name;
-load_template('template.html', array('TITLE' => $title, 'CONTENT' => $content, 'INSTRUCTIONS' => '','MESSAGES' => $message ));
+load_template('template.html', array('TITLE' => $title, 
+                            'CONTENT' => $content, 
+                            'INSTRUCTIONS' => '',
+                            'HEAD' => ' <script src="' . DSPWEBROOT . 'runcard/runcard_equation_evaluation.js"  language="javascript"></script>',
+                            'MESSAGES' => $message ));
 
 ?>
