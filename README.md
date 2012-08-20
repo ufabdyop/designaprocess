@@ -6,7 +6,7 @@ Design and Document A Process
 Installation
 ------------
 * The pdo.php file contains database configuration options.  By default, it points to the dsp.sqlite database file, but this could be changed to any DB that has a pdo driver.
-* ./library/authentication.php contains the methods for authenticating.  This class represents a basic interface that could be replaced with any authentication engine by replacing the existing functions.
+* ./library/authentication.php contains the methods for authenticating.  This class represents a basic interface that could be replaced with any authentication engine by replacing the existing functions. Copy authentication.php.simple to authentication.php and edit to get up and running.
  
 
 
