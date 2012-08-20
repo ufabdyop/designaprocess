@@ -972,3 +972,9 @@ tr.error_row td {
     margin-bottom: 10px;
     display: none;
 }
+
+.runcard_sortable {
+    cursor: move;
+    list-style-type: decimal;
+    
+}

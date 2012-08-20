@@ -132,6 +132,39 @@
 
 		public function remove_process_form() {
 		}
+                
+                public function reorder_process_forms($ordering = array()) {
+                    //first check that the ordering contains all process forms
+                    $existing_ids = array();
+                    $existing_forms_indexed = array();
+                    foreach($this->process_forms as $pf) {
+                        $existing_ids[] = $pf->id;
+                        $existing_forms_indexed[$pf->id] = $pf;
+                    }
+                    $intersection = array_intersect($existing_ids, $ordering);
+                    $complete_overlap = false;
+                    if (count($intersection) == count($existing_ids)) {
+                        $complete_overlap = true;
+                    }
+                    
+                    if (!$complete_overlap) {
+                        throw new Exception("Reordering array does not contain all process ids");
+                    }
+                    
+                    $this->process_forms = array();
+                    foreach($ordering as $id) {
+                        $this->process_forms[] = $existing_forms_indexed[$id];
+                    }
+                }
+                
+                public function remove_step($process_id, $order) {
+                    $process = $this->process_forms[$order];
+                    if ($process->id != $process_id) {
+                        throw new Exception("Order does not match process id");
+                    }
+                    array_splice($this->process_forms, $order, 1);
+                    
+                }
 
 		private function initialize($sql_results) {
 			if ($sql_results) {
