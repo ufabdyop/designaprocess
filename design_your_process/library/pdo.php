@@ -1,6 +1,6 @@
 <?php
 $global_db_handle = false;
-$global_debug = true;
+$global_debug = false;
 $global_debug_file = '/var/log/dyop.sql.log';
 
 function db_connect() {
