@@ -215,7 +215,7 @@ function create_test_process_form() {
      $retrieved_card = Runcard::get_by_id($runcard->id);
      $this->AssertEquals($runcard->username, $username, "Username should be the same as in original");
      $this->AssertEquals($runcard->name, $name, "Name should be the same as in original");
-    
+     $this->remove();
    }
 
    public function TearDown()

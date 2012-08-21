@@ -204,14 +204,12 @@
 		public function remove_parameter() {
 		}
                 
-                public function to_html() {
-                    $buffer = '';
-
+                private function to_arrays() {
+                    $result_set = array();
                     $inputs = $this->get_input_parameters();
                     $input_table = array();
                     $input_hiddens = '';
                     if ($inputs) {
-                        $buffer .= "<h3>Inputs</h3>\n";
                         foreach($inputs as $i) {
                             $input_table[] = array(
                                 'Name' => $i->name,
@@ -221,13 +219,11 @@
                             $input_hiddens .= form_hidden($i->id, $i->value);
                         }
                     }
-                    $buffer .= rows_to_table($input_table);
-
+                    $result_set['Inputs'] = $input_table;
                     
                     $parameters = $this->get_process_parameters();
                     $p_table = array();
                     if ($parameters) {
-                        $buffer .= "<h3>Process Parameters</h3>\n";
                         foreach($parameters as $i) {
                             $p_table[] = array(
                                 'Name' => $i->name,
@@ -236,12 +232,11 @@
                             );
                         }
                     }
-                    $buffer .= rows_to_table($p_table);
-                    
+                    $result_set['Process Parameters'] = $p_table;
+
                     $parameters = $this->get_measured_result_parameters();
                     $m_table = array();
                     if ($parameters) {
-                        $buffer .= "<h3>Predicted Results</h3>\n";
                         foreach($parameters as $i) {
                             $m_table[] = array(
                                 'Name' => $i->name,
@@ -252,12 +247,11 @@
                             );
                         }
                     }
-                    $buffer .= rows_to_table($m_table) ;
+                    $result_set['Predicted Results'] = $m_table;
                     
                     $parameters = $this->process->equations;
                     $p_table = array();
                     if ($parameters) {
-                        $buffer .= "<h3>Equations</h3>\n";
                         foreach($parameters as $i) {
                             $i->equation = preg_replace('/var_id\d*_/', '', $i->equation);
                             $p_table[] = array(
@@ -270,12 +264,57 @@
                             );
                         }
                     }
-                    $buffer .= rows_to_table($p_table);
+                    $result_set['Equations'] = $p_table;
                     
+                    return $result_set;
+                }
+                
+                private function html_tables($with_headers = true) {
+                    $results = $this->to_arrays();
+                    $result_set = array();
                     
-                    
+                    foreach($results as $category => $table) {
+                        $buffer = '';
+                        if ($with_headers) {
+                            $buffer .= "<h3>$category</h3>\n";
+                        }
+                        $buffer .= rows_to_table($table);
+                        $result_set[] = $buffer;
+                    }
+
+                    return $result_set;
+                }
+                
+                public function to_html($with_headers = true) {
+                    $buffer = implode('', $this->html_tables($with_headers));
                     return $buffer;
-                    
+                }
+                
+                public function to_printer_html($blank_out_value = false) {
+                    $tables = $this->to_arrays();
+                    $buffer = "<table>\n";
+                    $first_row_html = ' class="first_row"';
+                    foreach($tables as $category => $table) {
+                        foreach ($table as $row) {
+                            $buffer .= "<tr$first_row_html><td class=\"first_column\">{$row['Name']}</td>";
+                            if ($blank_out_value) {
+                                $row['Value'] = '<span class="blank_table_entry">&nbsp;</span>';
+                                if (isset($row['Evaluation'])) {
+                                    unset($row['Evaluation']);
+                                }
+                            }
+                            if (isset($row['Evaluation'])) {
+                                $buffer .= "<td class=\"equation_value\">{$row['Value']}</td><td>{$row['Evaluation']}</td>";
+                            } else {
+                                //$buffer .= "<td colspan=\"2\">{$row['Value']}</td>";
+                                $buffer .= "<td>{$row['Value']}</td>";
+                            }
+                            $buffer .= "<td class=\"last_column\">{$row['Unit']}</td></tr>\n";
+                            $first_row_html = '';
+                        }
+                    }
+                    $buffer .= "</table>\n";
+                    return $buffer;
                 }
 
 		private function initialize($sql_results) {

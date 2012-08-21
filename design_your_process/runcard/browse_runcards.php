@@ -28,9 +28,10 @@ $runcards = Runcard::get_all_public();
 </div>
 
 <?php
+$instructions = 'To create a new runcard, first click the Home link to return to process selection.  Then select a process and click &quot;Add to Runcard&quot;.';
 
 $content = ob_get_clean();
 $title = "Browse Runcards";
-load_template('template.html', array('TITLE' => $title, 'CONTENT' => $content, 'INSTRUCTIONS' => '','MESSAGES' => $message ));
+load_template('template.html', array('TITLE' => $title, 'CONTENT' => $content, 'INSTRUCTIONS' => $instructions,'MESSAGES' => $message ));
 
 ?>
