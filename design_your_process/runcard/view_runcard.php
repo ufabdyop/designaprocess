@@ -13,7 +13,7 @@ foreach($process_forms as $pf) {
     echo $pf->to_html();
 }
 echo "<br/>";
-echo styled_button("print_runcard.php?id=$runcard_id", "Printer-Friendly Version", "print");
+echo styled_button("print_runcard.php?id=$runcard_id", "Printer-Friendly Version", "print", array(), array('_target' => 'blank'));
 ?>
 
 
