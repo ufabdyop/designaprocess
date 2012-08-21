@@ -29,6 +29,6 @@ load_template('template.html', array('TITLE' => $title,
                             'CONTENT' => $content, 
                             'INSTRUCTIONS' => 'Drag rows to re-order.',
                             'HEAD' => ' <script src="' . DSPWEBROOT . 'runcard/runcard_edit.js"  language="javascript"></script>',
-                            'MESSAGES' => $message ));
+                            ));
 
 ?>

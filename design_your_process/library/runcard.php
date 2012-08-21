@@ -80,10 +80,13 @@
 		 * @return int, the id of the runcard that was saved 
 		 */
 		public static function create($username = '', $name = '', $public = 0) {
-			$username = addslashes($username);
-			$name = addslashes($name);
-			$public = addslashes($public);
-			db_query("INSERT INTO runcard (username, name, public) VALUES ('$username', '$name', '$public');");
+			$username = str_replace("'", "''", $username);
+			$name = str_replace("'", "''", $name);
+			$public = str_replace("'", "''", $public);
+
+			//debugging
+			$sql = "INSERT INTO runcard (username, name, public) VALUES ('$username', '$name', '$public');";
+			db_query($sql);
 			$id = last_insert_id();
 			return Runcard::get_by_id($id);
 		}
