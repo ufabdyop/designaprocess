@@ -1,9 +1,11 @@
 <?php
  require_once('helper_functions.php');
+ 
 	function get_runcards_for_user($username) {
 		$username = addslashes($username);
 		$q = "SELECT * FROM runcard WHERE username = '$username'";
 	}
+        
 	class Runcard {
 		var $id;
 		var $username;
@@ -80,13 +82,13 @@
 		 * @return int, the id of the runcard that was saved 
 		 */
 		public static function create($username = '', $name = '', $public = 0) {
-			$username = str_replace("'", "''", $username);
-			$name = str_replace("'", "''", $name);
-			$public = str_replace("'", "''", $public);
 
-			//debugging
+			/*
 			$sql = "INSERT INTO runcard (username, name, public) VALUES ('$username', '$name', '$public');";
 			db_query($sql);
+			*/
+			named_query('create_runcard', array(':username' => $username, ':name' => $name, ':public' => $public));
+			
 			$id = last_insert_id();
 			return Runcard::get_by_id($id);
 		}
@@ -103,15 +105,19 @@
 				foreach($inputs as $parameter) {
 					if ($parameter->value) {
 						$no_inputs = false;
-						$q = "INSERT INTO runcard_inputs (runcard_id, ordering, process_id, input_id, input_value)
-							VALUES ('$this->id','$i','$pf->id','$parameter->id','$parameter->value')";
-						db_query($q);
+                                                named_query('runcard_insert_inputs', array(
+                                                                ':id' => $this->id,
+                                                                ':ordering' => $i,
+                                                                ':process_id' => $pf->id,
+                                                                ':input_id' => $parameter->id,
+                                                                ':input_value' => $parameter->value) );
 					}
 				}
 				if ($no_inputs) {
-						$q = "INSERT INTO runcard_inputs (runcard_id, ordering, process_id)
-							VALUES ('$this->id','$i','$pf->id')";
-						db_query($q);
+                                                named_query('runcard_insert__no_inputs', array(
+                                                                ':id' => $this->id,
+                                                                ':ordering' => $i,
+                                                                ':process_id' => $pf->id));
 				}
 			}
 		}
@@ -187,10 +193,12 @@
                         $sql = "SELECT * FROM runcard_inputs where runcard_id = '$runcard_id' order by ordering, process_id";
                         $rows = db_query_with_column_names($sql);
                         $last_process = false;
+                        $last_ordering = false;
                         $new_process = false;
                         foreach($rows as $row) {
                             $process_id = $row['process_id'];
-                            if ($last_process != $process_id) {
+                            $ordering = $row['ordering'];
+                            if ($last_process != $process_id || $last_ordering != $ordering) {
                                 if ($new_process) {
                                     $this->add_process_form($new_process);
                                 }
@@ -200,6 +208,7 @@
                                 $new_process->set_parameter_by_id($row['input_id'], $row['input_value']);
                             }
                             $last_process = $process_id;
+                            $last_ordering = $ordering;
                         }
                         if ($new_process) {
                             $this->add_process_form($new_process);

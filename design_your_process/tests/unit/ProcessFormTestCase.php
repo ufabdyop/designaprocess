@@ -168,7 +168,9 @@ function create_test_process_form() {
    {
      $this->testCreateAndDeleteRunCard();
      $this->testAddToRunCard();
+     $this->testRunCardWithSpecialCharacters();
    }
+   
    public function testAddToRunCard() {
      $runcard = Runcard::create();
      $process_form = create_test_process_form();
@@ -179,7 +181,7 @@ function create_test_process_form() {
      
      $retrieve_card = Runcard::get_by_id($runcard->id);
      $forms = $retrieve_card->get_process_forms();
-     $this->AssertEquals(count($forms), 1, 'There should be 1 process form attached to this runcard');
+     $this->AssertEquals(count($forms), 1, 'There should be 1 process form attached to this runcard, with ID: ' . $runcard->id);
      
      //add second process_form to runcard
      $runcard->add_process_form($process_form);
@@ -189,7 +191,9 @@ function create_test_process_form() {
      $forms = $retrieve_card->get_process_forms();
      $this->AssertEquals(count($forms), 2, 'There should be 2 process forms attached to this runcard');
      
+     $runcard->remove();
    }
+   
    public function testCreateAndDeleteRunCard() {
      $runcard = Runcard::create();
      $this->AssertEquals(is_numeric($runcard->id), true, 'There now be a runcard in the db');
@@ -200,6 +204,18 @@ function create_test_process_form() {
      } catch (Exception $e) {
         $this->pass("Should have thrown an exception");
      }
+   }
+   
+   public function testRunCardWithSpecialCharacters() {
+     $username = "Bob's favorite card;";
+     $name = "Hubert O'malley";
+     $public = 1;
+     $runcard = Runcard::create($username, $name, $public);
+     $runcard->save();
+     $retrieved_card = Runcard::get_by_id($runcard->id);
+     $this->AssertEquals($runcard->username, $username, "Username should be the same as in original");
+     $this->AssertEquals($runcard->name, $name, "Name should be the same as in original");
+    
    }
 
    public function TearDown()
