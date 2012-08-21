@@ -5,7 +5,7 @@ $runcard_id = $_REQUEST['id'];
 $runcard = Runcard::get_by_id($runcard_id);
 $process_forms = $runcard->get_process_forms();
 
-echo styled_button("print_runcard.php?id=$runcard_id", "Printer-Friendly Version", "print");
+echo styled_button("print_runcard.php?id=$runcard_id", "Printer-Friendly Version", "print", array(), array('_target' => 'blank'));
 echo "<br/>";
 
 foreach($process_forms as $pf) {
