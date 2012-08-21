@@ -37,6 +37,9 @@ td.nested_table_container td {
 td.nested_table_container .first_row td {
     border-top-width: 0;
 }
+td.nested_table_container table {
+    width: 100%;
+}
 
 td.nested_table_container td.first_column {
     border-left-width: 0;
