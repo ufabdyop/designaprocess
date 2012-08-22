@@ -978,3 +978,7 @@ tr.error_row td {
     list-style-type: decimal;
     
 }
+
+.ui-autocomplete a {
+    font-size: 70%;
+}

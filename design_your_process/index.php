@@ -6,6 +6,7 @@ $all_materials = get_all_materials();
 $all_tools = get_all_tools();
 ob_clean();
 ob_start();
+$quick_search = "<script src=\"" . DSPWEBROOT . "/assets/quick_search.js\" type=\"text/javascript\"></script>\n";
 ?>
 <script>
 function capture_process_id() {
@@ -16,10 +17,19 @@ function capture_process_id() {
     
 }    
 </script>
+
+
             <form action="show_parameters.php" method="post">	
 			<ul >
 			
-					<li id="li_1" >
+					<li id="li_quick_search" >
+		<label class="description" for="quick_search">Quick Search</label>
+		<div>
+		<input class="element input medium" id="quick_search" name="quick_search" type="text"/>
+		</div> 
+		</li>		
+                			
+		<li id="li_1" >
 		<label class="description" for="element_1">Category </label>
 		<div>
 		<select class="element select medium" id="category"  name="category" onchange="narrow_processes(capture_process_id);"> 
@@ -74,7 +84,10 @@ $admin_button = '
         </a>
 ';
 
-load_template('template.html', array('TITLE' => 'Design a Process', 'CONTENT' => $content, 'DASHBOARD' => $admin_button ));
+load_template('template.html', array('TITLE' => 'Design a Process', 
+                                'CONTENT' => $content, 
+                                'HEAD' => $quick_search,
+                                'DASHBOARD' => $admin_button ));
 
 /*
 	if(isset($_POST['Go'])){

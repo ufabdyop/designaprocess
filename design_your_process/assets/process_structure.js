@@ -55,6 +55,17 @@ function indexer() {
         }
         return null;
     }
+    this.get_processes_by_search_term = function(filter) {
+        var return_processes = new Array();
+
+        for (var i = 0; i < this.all_processes.length; i++) {
+            if (this.all_processes[i]['long_name'].match(new RegExp(filter, 'i'))) {
+                return_processes.push(this.all_processes[i]);
+            }
+        }
+        return return_processes;
+        
+    }
 }
 
 function push_if_not_in(array, element) {

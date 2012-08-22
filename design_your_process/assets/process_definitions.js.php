@@ -44,7 +44,12 @@ var all_processes = new indexer();
 		echo "$process_name.process = '" . $process_index[0]['process'] . "';\n";
 		echo "$process_name.material = '" . $process_index[0]['material'] . "';\n";
 		echo "$process_name.tool = '" . $process_index[0]['tool'] . "';\n";
-
+		
+                echo "$process_name.long_name = '" . $process_index[0]['category'] . " | ' + " . 
+                        "'" . $process_index[0]['process'] . " | ' + " .
+                        "'" . $process_index[0]['tool'] . " | ' + " .
+                        "'" . $process_index[0]['material']  . "';\n";
+                
 		$process_index[0]['category'];
                 $all_input_fields = array(); 
                 $parameters = array(); 

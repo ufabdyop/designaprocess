@@ -48,7 +48,7 @@ function rows_to_table($rows, $links = array() , $link_var = '', $additional_get
                             } else {
 				$english_name = str_replace('_', ' ', $fieldname);
 				$english_name = ucwords($english_name);
-                                $content .= "\t\t<th>$fieldname</th>\n";
+                                $content .= "\t\t<th>$english_name</th>\n";
                             }
                         }
                 }

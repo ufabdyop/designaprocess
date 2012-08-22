@@ -5,6 +5,9 @@ $all_categories = get_all_categories();
 $all_processes = get_all_processes();
 $all_materials = get_all_materials();
 $all_tools = get_all_tools();
+$quick_search = "<script src=\"" . DSPWEBROOT . "/assets/quick_search.js\" type=\"text/javascript\"></script>\n";
+                                
+
 ob_clean();
 ob_start();
 ?>
@@ -18,6 +21,12 @@ function capture_process_id() {
 </script>
             <form action="select_parameter.php" method="post">	
 			<ul >
+					<li id="li_quick_search" >
+		<label class="description" for="quick_search">Quick Search</label>
+		<div>
+		<input class="element input medium" id="quick_search" name="quick_search" type="text"/>
+		</div> 
+		</li>		
 			
 					<li id="li_1" >
 		<label class="description" for="element_1">Category </label>
@@ -66,7 +75,10 @@ function capture_process_id() {
 		
 <?php
 $content = ob_get_clean();
-load_template('template.html', array('TITLE' => 'Select a Process to Edit', 'CONTENT' => $content, 'INSTRUCTIONS' => 'Please select a process.' ));
+load_template('template.html', array('TITLE' => 'Select a Process to Edit',
+    'HEAD' => $quick_search,
+    'CONTENT' => $content, 
+    'INSTRUCTIONS' => 'Please select a process.' ));
 
 	if(isset($_POST['Go'])){
             $category=$_POST['category'];
