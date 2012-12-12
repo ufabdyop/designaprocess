@@ -6,7 +6,10 @@ symbols_: {"error":2,"expressions":3,"e":4,"EOF":5,"+":6,"-":7,"*":8,"/":9,"^":1
 terminals_: {2:"error",5:"EOF",6:"+",7:"-",8:"*",9:"/",10:"^",11:"!",12:"%",13:"(",14:")",15:"NUMBER",16:"E",17:"PI",19:"ID"},
 productions_: [0,[3,2],[4,3],[4,3],[4,3],[4,3],[4,3],[4,2],[4,2],[4,2],[4,3],[4,1],[4,1],[4,1],[4,1],[18,1]],
 performAction: function anonymous(yytext,yyleng,yylineno,yy,yystate,$$,_$) {
-
+if (typeof console == 'undefined' ) {
+	console = {};
+	console.log = function() {};
+}
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1: typeof console !== 'undefined' ? console.log($$[$0-1]) : print($$[$0-1]);
