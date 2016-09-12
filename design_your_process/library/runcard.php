@@ -115,7 +115,7 @@
 					}
 				}
 				if ($no_inputs) {
-                                                named_query('runcard_insert__no_inputs', array(
+                                                named_query('runcard_insert_no_inputs', array(
                                                                 ':id' => $this->id,
                                                                 ':ordering' => $i,
                                                                 ':process_id' => $pf->id));
