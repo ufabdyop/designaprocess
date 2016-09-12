@@ -1,70 +1,11 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
-CREATE TABLE "NewTable" (
-  "id" int(11) NOT NULL,
-  "runcard_id" int(11) NOT NULL,
-  "ordering" int(11) DEFAULT NULL,
-  "process_id" int(11) NOT NULL,
-  "input_id" int(11) DEFAULT NULL,
-  "input_value" text,
-  PRIMARY KEY ("id")
-);
-INSERT INTO "NewTable" VALUES(81,88,0,8,114,'13');
-INSERT INTO "NewTable" VALUES(82,88,0,8,144,'15');
-INSERT INTO "NewTable" VALUES(85,89,0,3,114,'12');
-INSERT INTO "NewTable" VALUES(86,89,0,3,115,'13');
-INSERT INTO "NewTable" VALUES(87,89,1,3,114,'12');
-INSERT INTO "NewTable" VALUES(88,89,1,3,115,'13');
-INSERT INTO "NewTable" VALUES(92,93,0,61,114,'10');
-INSERT INTO "NewTable" VALUES(215,96,0,51,118,'10');
-INSERT INTO "NewTable" VALUES(216,96,0,51,119,'2');
-INSERT INTO "NewTable" VALUES(217,96,1,31,116,'1000');
-INSERT INTO "NewTable" VALUES(218,96,2,69,122,'0.525');
-INSERT INTO "NewTable" VALUES(219,96,2,69,123,'130');
-INSERT INTO "NewTable" VALUES(220,96,2,69,124,'0.525');
-INSERT INTO "NewTable" VALUES(222,95,0,65,120,'25');
-CREATE TABLE "_process_notes_old_20120628" (
-  "id" int(11) NOT NULL,
-  PRIMARY KEY ("id")
-);
-CREATE TABLE "_process_notes_old_20120628_1" (
-  "id" int(11) NOT NULL,
-  "note" varchar(1024) DEFAULT NULL,
-  "date_modified" tinytext,
-  "active" int(11) DEFAULT '1',
-  PRIMARY KEY ("id")
-);
-CREATE TABLE "_process_notes_old_20120628_2" (
-  "id" int(11) NOT NULL,
-  "note" varchar(1024) DEFAULT NULL,
-  "date_modified" tinytext,
-  "active" int(11) DEFAULT '1',
-  "author" varchar(255) DEFAULT NULL,
-  PRIMARY KEY ("id")
-);
-CREATE TABLE "_process_notes_old_20120628_3" (
-  "id" int(11) NOT NULL,
-  "process_id" int(11) NOT NULL,
-  "note" varchar(1024) DEFAULT NULL,
-  "date_modified" tinytext,
-  "active" int(11) DEFAULT '1',
-  "author" varchar(255) DEFAULT NULL,
-  PRIMARY KEY ("id")
-);
-CREATE TABLE "_runcard_old_20120816" (
-  "id" int(11) NOT NULL,
-  "username" text NOT NULL,
-  "name" text,
-  "public" int(1) NOT NULL,
-  PRIMARY KEY ("id")
-);
 CREATE TABLE "equation" (
-  "id" int(11) NOT NULL,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "process_id" int(11) NOT NULL,
   "name" tinytext,
   "equation" text NOT NULL,
-  "unit" tinytext,
-  PRIMARY KEY ("id")
+  "unit" tinytext
 );
 INSERT INTO "equation" VALUES(15,6,'Deposition time','( (var_id114_Film_Thickness/ var_id10_Sputter_Rate)* (50/var_id144_Power))','min');
 INSERT INTO "equation" VALUES(16,7,'Deposition time','(50/ var_id144_Power) * ( var_id114_Film_Thickness/ var_id10_Sputter_Rate)','min');
@@ -224,7 +165,7 @@ INSERT INTO "equation" VALUES(198,286,'Deposition Time','var_id368_Film_Thicknes
 INSERT INTO "equation" VALUES(199,285,'Deposition Time','var_id368_Film_Thickness/var_id23_Deposition_Rate','Min');
 INSERT INTO "equation" VALUES(200,68,'Diffusion Time','0.0007* var_id121_Sheet_Resistance^2-0.1371* var_id121_Sheet_Resistance+12.625','Min');
 CREATE TABLE "history" (
-  "id" int(11) NOT NULL,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "process_id" int(11) NOT NULL,
   "date" text NOT NULL,
   "type" text NOT NULL,
@@ -241,8 +182,7 @@ CREATE TABLE "history" (
   "is_input_field" int(11) NOT NULL,
   "is_process_parameter" int(11) NOT NULL,
   "is_measured_result" int(11) NOT NULL,
-  "is_equation" int(11) NOT NULL,
-  PRIMARY KEY ("id")
+  "is_equation" int(11) NOT NULL
 );
 INSERT INTO "history" VALUES(7,121,'2012-06-11, 04:13:19','edit','param','param1','','','val2','val2-2',NULL,NULL,NULL,NULL,1,0,0,0);
 INSERT INTO "history" VALUES(8,121,'2012-06-11, 04:13:26','delete','param1',NULL,'',NULL,'val2-2',NULL,NULL,NULL,NULL,NULL,1,0,0,0);
@@ -1237,7 +1177,7 @@ CREATE TABLE "ordering" (
   "ordering" int(8) DEFAULT NULL
 );
 CREATE TABLE "parameter" (
-  "id" int(11) NOT NULL,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "name" text,
   "value" text,
   "type" text,
@@ -1246,8 +1186,7 @@ CREATE TABLE "parameter" (
   "updated_at" text,
   "is_input_field" int(11) NOT NULL,
   "is_process_parameter" int(11) DEFAULT NULL,
-  "is_measured_result" int(11) DEFAULT NULL,
-  PRIMARY KEY ("id")
+  "is_measured_result" int(11) DEFAULT NULL
 );
 INSERT INTO "parameter" VALUES(1,'Head number',NULL,'string',NULL,1,NULL,0,1,0);
 INSERT INTO "parameter" VALUES(2,'Base Pressure',NULL,'float','Torr',1,NULL,0,1,0);
@@ -1471,9 +1410,8 @@ INSERT INTO "parameter" VALUES(370,'Density',NULL,NULL,'g/cm^3',NULL,NULL,0,1,0)
 INSERT INTO "parameter" VALUES(372,'Z-Ratio',NULL,NULL,'',NULL,NULL,0,1,0);
 INSERT INTO "parameter" VALUES(373,'Number of wafers',NULL,NULL,'',NULL,NULL,1,0,0);
 CREATE TABLE "parameter_types" (
-  "id" int(11) NOT NULL,
-  "name" text,
-  PRIMARY KEY ("id")
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "name" text
 );
 INSERT INTO "parameter_types" VALUES(1,'string');
 INSERT INTO "parameter_types" VALUES(2,'scalar');
@@ -2492,13 +2430,12 @@ INSERT INTO "process_form" VALUES(251,373,'',0,'');
 INSERT INTO "process_form" VALUES(252,373,'',0,'');
 INSERT INTO "process_form" VALUES(37,107,'80',0,'');
 CREATE TABLE "process_notes" (
-  "id" int(11) NOT NULL,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "process_id" int(11) NOT NULL,
   "note" varchar(1024) DEFAULT NULL,
   "date_modified" tinytext,
   "active" int(11) DEFAULT '1',
-  "author" varchar(255) DEFAULT NULL,
-  PRIMARY KEY ("id")
+  "author" varchar(255) DEFAULT NULL
 );
 INSERT INTO "process_notes" VALUES(1,78,'Test Note','2012-06-28 11:53:11',0,'anonymous');
 INSERT INTO "process_notes" VALUES(2,78,'foo bla bla bla','2012-06-28 11:57:56',0,'anonymous');
@@ -2528,12 +2465,11 @@ INSERT INTO "process_notes" VALUES(26,11,'AS DEPOSITED: sheet resistance 50 ohms
 INSERT INTO "process_notes" VALUES(27,11,'AFTER ANNEAL: (Annealed in oven at atmosphere at 300 C for one hour. ) Sheet Resistance = 8.2 Ohms/Square, Transmittance after anneal: 520 nm: 90%, 640 nm: 91%, 780 nm: 89%','2016-08-10 16:40:53',1,'anonymous');
 INSERT INTO "process_notes" VALUES(28,81,'IPA rinse 1 min, N2 Dry','2016-09-06 20:10:05',1,'anonymous');
 CREATE TABLE "processes" (
-  "id" int(11) NOT NULL,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "category" text NOT NULL,
   "process" text NOT NULL,
   "tool" text NOT NULL,
-  "material" text NOT NULL,
-  PRIMARY KEY ("id")
+  "material" text NOT NULL
 );
 INSERT INTO "processes" VALUES(2,'Deposition','ALD','Cambridge Fiji F200','HfO');
 INSERT INTO "processes" VALUES(3,'Deposition','ALD','Cambridge Fiji F200','ZnO');
@@ -2645,11 +2581,10 @@ INSERT INTO "processes" VALUES(284,'Deposition','Sputter','Denton Discovery 18',
 INSERT INTO "processes" VALUES(285,'Deposition','Evaporation','Denton SJ20C','Cu');
 INSERT INTO "processes" VALUES(286,'Deposition','Evaporation','Denton SJ20C','Ni');
 CREATE TABLE "runcard" (
-  "id" int(11) NOT NULL,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "username" text NOT NULL,
   "name" text,
-  "public" int(11) NOT NULL,
-  PRIMARY KEY ("id")
+  "public" int(11) NOT NULL
 );
 INSERT INTO "runcard" VALUES(92,'dummy','test',0);
 INSERT INTO "runcard" VALUES(93,'testusra','My Card!',1);
@@ -2684,13 +2619,12 @@ INSERT INTO "runcard" VALUES(134,'tysenh','test',0);
 INSERT INTO "runcard" VALUES(135,'tysenh','Vapor Prime',0);
 INSERT INTO "runcard" VALUES(136,'tysenh','test',0);
 CREATE TABLE "runcard_inputs" (
-  "id" int(11) NOT NULL,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "runcard_id" int(11) NOT NULL,
   "ordering" int(11) DEFAULT NULL,
   "process_id" int(11) NOT NULL,
   "input_id" int(11) DEFAULT NULL,
-  "input_value" text,
-  PRIMARY KEY ("id")
+  "input_value" text
 );
 INSERT INTO "runcard_inputs" VALUES(81,88,0,8,114,'13');
 INSERT INTO "runcard_inputs" VALUES(82,88,0,8,144,'15');
@@ -2819,13 +2753,12 @@ INSERT INTO "runcard_inputs" VALUES(988,134,0,73,373,'test');
 INSERT INTO "runcard_inputs" VALUES(989,135,0,60,373,'1');
 INSERT INTO "runcard_inputs" VALUES(990,136,0,252,373,'254');
 CREATE TABLE "runcard_inputs_copy" (
-  "id" int(11) NOT NULL,
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "runcard_id" int(11) NOT NULL,
   "ordering" int(11) DEFAULT NULL,
   "process_id" int(11) NOT NULL,
   "input_id" int(11) NOT NULL,
-  "input_value" text,
-  PRIMARY KEY ("id")
+  "input_value" text
 );
 INSERT INTO "runcard_inputs_copy" VALUES(81,88,0,8,114,'13');
 INSERT INTO "runcard_inputs_copy" VALUES(82,88,0,8,144,'15');
