@@ -7,10 +7,10 @@ function db_connect() {
   global $global_db_handle;
   $dbh;
 
-  $dbInfo['database_target'] = "charon.nanofab.utah.edu";
+  $dbInfo['database_target'] = "localhost";
   $dbInfo['database_name'] = "design_process";
-  $dbInfo['username'] = "dspuser";
-  $dbInfo['password'] = "mecru";
+  $dbInfo['username'] = "design_process";
+  $dbInfo['password'] = "123456";
 
   $dbConnString = "sqlite:" . pathinfo(__FILE__, PATHINFO_DIRNAME) . "/../assets/dsp.sqlite";
   try {
