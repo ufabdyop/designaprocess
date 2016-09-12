@@ -1,11 +1,23 @@
 
-Clean up invalid data in sqlite:
+To clean up invalid data in sqlite:
+---
 
 delete from equation where process_id not in (select id from processes);
 delete from process_notes where process_id not in (select id from processes);
 
-Convert sqlite to mysql:
+To convert sqlite to mysql:
+---
 
-sqlite3 /var/www/design_your_process/assets/dsp.sqlite .dump | python sqlite3-to-mysql.py -d dyop | grep -v 'grant all on dyop' | mysql
+	sqlite3 /var/www/design_your_process/assets/dsp.sqlite .dump | python sqlite3-to-mysql.py -d dyop | grep -v 'grant all on dyop' | mysql
 
+To convert mysql to sqlite:
+---
+
+Right now this is a pretty manual process, but basically, I do:
+
+	mysqldump  --skip-create-options --compatible=ansi --skip-extended-insert --compact --single-transaction dyop > /tmp/dyop.sql
+
+	* Then edit /tmp/dyop.sql to set the id of each table as type "INTEGER PRIMARY KEY AUTOINCREMENT"
+	* Then edit /tmp/dyop.sql to look for \' and replace with ''
+	* Then edit /tmp/dyop.sql to look for strings ending in \n' and remove the \n (otherwise, this messes up process_definitions.js.php)
 
