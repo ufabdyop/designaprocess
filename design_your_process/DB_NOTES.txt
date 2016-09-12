@@ -1,0 +1,11 @@
+
+Clean up invalid data in sqlite:
+
+delete from equation where process_id not in (select id from processes);
+delete from process_notes where process_id not in (select id from processes);
+
+Convert sqlite to mysql:
+
+sqlite3 /var/www/design_your_process/assets/dsp.sqlite .dump | python sqlite3-to-mysql.py -d dyop | grep -v 'grant all on dyop' | mysql
+
+

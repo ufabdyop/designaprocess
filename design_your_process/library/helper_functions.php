@@ -97,6 +97,7 @@ function get_unique_parameters($process_id){
 function delete_process($process_id){
     $sql="SELECT DISTINCT parameter_id FROM process_form WHERE process_id = '$process_id'";
     $results = db_query($sql);
+    $process_parameters = [];   
     foreach($results as $row) {
         $process_parameters[] = $row[0];
     }
@@ -104,15 +105,18 @@ function delete_process($process_id){
 
     $sql="SELECT DISTINCT parameter_id FROM process_form WHERE process_id <> '$process_id'";
     $results=db_query($sql);
+    $other_parameters = [];   
     foreach($results as $row) {
         $other_parameters[] = $row[0];
     }
 
-    $orphan_parameters=array_diff( $process_parameters ,  $other_parameters);
+    $orphan_parameters=array_diff($process_parameters, $other_parameters);
 
-    $ids = implode(', ', $orphan_parameters);
-    $sql="DELETE FROM parameter WHERE id IN ( $ids )";
-    db_query($sql);
+    $ids = implode(', ', $orphan_parameters);    
+    if ($ids) {
+        $sql="DELETE FROM parameter WHERE id IN ( $ids )";
+        db_query($sql);
+    }
  
     //delete rows in process_form table that were associated with that process
     $sql="DELETE FROM process_form WHERE process_id = '$process_id'";
@@ -121,9 +125,7 @@ function delete_process($process_id){
     //delete process from processes table
     $sql="DELETE FROM processes WHERE id = '$process_id'";
     db_query($sql);
- 
 }
-
 
 function delete_parameter_from_process ($process_id , $parameter_id){ 
     //insert delete record to history table

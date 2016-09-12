@@ -95,7 +95,8 @@
 
 		public function save() {
 			//delete processes from runcard_inputs table if they've been removed from object
-			db_query("DELETE FROM runcard_inputs where runcard_id = '$this->id'");
+      $sql = "DELETE FROM runcard_inputs where runcard_id = '$this->id'";
+			db_query($sql);
 
 			//insert new processes into runcard_inputs
 			for($i = 0; $i < count($this->process_forms);  $i++) {

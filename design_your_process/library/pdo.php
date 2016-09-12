@@ -55,7 +55,12 @@ function db_query($sql, $handle = null) {
         }
         fclose($fh);
     }
-    return $pdo_statement->fetchAll();
+    $return_rows = NULL;
+    try {
+      $return_rows = $pdo_statement->fetchAll();
+    } catch (Exception $e) {
+    }
+    return $return_rows;
 }
 
 function db_query_with_column_names($sql, $handle = null) {

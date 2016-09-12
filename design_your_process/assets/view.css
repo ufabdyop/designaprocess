@@ -99,7 +99,7 @@ h1 a
 
 img
 {
-	behavior:url(css/iepngfix.htc);
+	behavior:url(iepngfix.htc);
 	border:none;
 }
 
@@ -348,7 +348,7 @@ span.symbol
 
 input.text
 {
-	background:#fff url(../../../images/shadow.gif) repeat-x top;
+	background:#fff url(shadow.gif) repeat-x top;
 	border-bottom:1px solid #ddd;
 	border-left:1px solid #c3c3c3;
 	border-right:1px solid #c3c3c3;
@@ -369,7 +369,7 @@ input.file
 
 textarea.textarea
 {
-	background:#fff url(../../../images/shadow.gif) repeat-x top;
+	background:#fff url(shadow.gif) repeat-x top;
 	border-bottom:1px solid #ddd;
 	border-left:1px solid #c3c3c3;
 	border-right:1px solid #c3c3c3;
@@ -387,7 +387,7 @@ select.select
 	font-size:100%;
 	margin:1px 0;
 	padding:1px 0 0;
-	background:#fff url(../../../images/shadow.gif) repeat-x top;
+	background:#fff url(shadow.gif) repeat-x top;
 	border-bottom:1px solid #ddd;
 	border-left:1px solid #c3c3c3;
 	border-right:1px solid #c3c3c3;

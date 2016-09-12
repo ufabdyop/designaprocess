@@ -35,7 +35,7 @@ ob_start();
 	<input type="submit" value="Login">
 </form>
 
-<?
+<?php
 $html = ob_get_clean();
 load_template('template.html', array('TITLE' => 'Login',
                                             'CONTENT' => $html,  
