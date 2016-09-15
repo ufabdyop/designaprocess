@@ -1,0 +1,3 @@
+<?php
+
+define('NANOFAB_SSO_SIGN_KEY', 'AHTIW513h4j5hAFYRSY1y85h8ahlo757a9wfaHIYaq5251QGAGaiawjrqa');

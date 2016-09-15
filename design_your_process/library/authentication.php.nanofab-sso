@@ -1,0 +1,57 @@
+<?php
+$functions_path = realpath(pathinfo(__FILE__, PATHINFO_DIRNAME) . '/nanofab-sso' . '/functions.php');
+require_once($functions_path);
+
+use Lcobucci\JWT\ValidationData;
+use Lcobucci\JWT\Parser;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+
+class User {
+	var $firstname = 'Dummy';
+	var $lastname = 'User';
+	var $email = 'noemail@noemail.com';
+	var $is_admin = true;
+	var $username = 'dummy';
+}
+
+class Authentication {
+	function __construct() {
+		session_start();
+	}
+	function get_logged_in_user() {
+                $jwtuser = Nanofab_SSO_Plugin::get_jwt_user();
+		if ($jwtuser) {
+                    $user = new User();
+                    $user->firstname = $jwtuser['firstname'];
+                    $user->lastname = $jwtuser['lastname'];
+                    $user->email = $jwtuser['email'];
+                    $user->username = $jwtuser['username'];
+                    $user->is_admin = $jwtuser['staff'];
+                    return $user;
+		}
+		return false;
+	}
+	function is_admin() {
+		$user = $this->get_logged_in_user();
+		if ($user) {
+			return $user->is_admin;
+		}
+		return false;
+	}
+	function is_logged_in() {
+		$user = $this->get_logged_in_user();
+		return $user ? true : false;
+	}
+	function login($username, $password) {
+                header("Location: https://coral.nanofab.utah.edu/lab/login");
+	}
+	function logout() {
+                header("Location: https://coral.nanofab.utah.edu/lab/login/logout");
+	}
+        function enforce_must_login() {
+            if (!$this->is_logged_in())  {
+                header("Location: https://coral.nanofab.utah.edu/lab/login");
+            }
+        }
+}
+

@@ -32,6 +32,9 @@ $instructions = 'To create a new runcard, first click the Home link to return to
 
 $content = ob_get_clean();
 $title = "Browse Runcards";
-load_template('template.html', array('TITLE' => $title, 'CONTENT' => $content, 'INSTRUCTIONS' => $instructions,'MESSAGES' => $message ));
-
-?>
+$message = isset($message) ? $message : "";
+load_template('template.html', 
+        array('TITLE' => $title, 
+            'CONTENT' => $content, 
+            'INSTRUCTIONS' => $instructions,
+            'MESSAGES' => $message ));
