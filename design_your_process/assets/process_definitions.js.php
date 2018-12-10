@@ -23,6 +23,9 @@ var all_processes = new indexer();
 		if ($process_index) {
 			$process_name = $process_index[0][1] . '_' .$process_index[0][2] . '_' .$process_index[0][3] . '_'.$process_index[0][4] ;
 			$process_name = preg_replace('/[^a-zA-Z0-9_]/', '_', $process_name);
+			if (preg_match('/^\d/', $process_name)) {
+				$process_name = "_$process_name";
+			}
 		} else {
 			continue;
 		}
