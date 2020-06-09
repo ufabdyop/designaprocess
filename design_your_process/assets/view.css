@@ -940,7 +940,7 @@ tr:nth-child(odd) td {
 }
 table {
     border-collapse: collapse;
-    width: 99%;
+    width: 100%;
     margin: 0 auto;
     
 }
@@ -981,4 +981,23 @@ tr.error_row td {
 
 .ui-autocomplete a {
     font-size: 70%;
+}
+input.medium, select.medium{height: 30px; border: 1px solid #ccc;}
+
+@media (max-width : 767px) {
+#dashboard{position: static; padding-top: 10px;}
+	#form_container{margin-top: 5px; max-width: 640px; width: 96%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+	.scrooll_horizantal{width: 100%; overflow-y: scroll;}
+	.is_measured_result table{width: 500px;}
+	.is_measured_result tr td:nth-child(1), .is_measured_result tr td:nth-child(2){width: 150px;}
+	
+}
+
+@media (max-width : 650px) {
+input.medium, select.medium{width: 100%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+	div#bottom_shadow{width: 96%; background-position: center 0;}
+}
+
+@media (max-width : 340px) {
+	.logo{max-width: 260px; width: 100%;}	
 }

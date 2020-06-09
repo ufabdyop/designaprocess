@@ -145,8 +145,10 @@ function predicted_result_table ($process_id, $links, $hide_ids = true){
     if ($fields) {
             $content .= "<div class=\"is_measured_result\">\n";
             $content .= "<h3>Predicted Results</h3>\n";
+			$content .= "<div class=\"scrooll_horizantal\">\n";
             $content .= rows_to_table($fields, $links, 'parameter_id','&process_id='.$process_id, $options);
             $content .= "</div>\n";
+			$content .= "</div>\n";
             return $content;
     }
 }
